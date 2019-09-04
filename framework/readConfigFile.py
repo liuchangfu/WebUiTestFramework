@@ -6,11 +6,11 @@ import configparser
 configPath = os.path.abspath(os.curdir) + '\\testConfig\\config.ini'
 print(configPath)
 
-class ReadConfig:
+
+class ReadConfig(object):
 
     # 构造函数，读取配置文件
     def __init__(self):
-
         self.config = configparser.ConfigParser()
         self.config.read(configPath)
 

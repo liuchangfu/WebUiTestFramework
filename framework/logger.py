@@ -15,10 +15,8 @@ class Logger(object):
         # 创建一个logger
         self.logger = logging.getLogger(logger)
         self.logger.setLevel(logging.DEBUG)
-
         # 获取当前时间
         rq = time.strftime('%Y%m%d%H%M', time.localtime(time.time()))
-        # log_path = os.path.dirname(os.getcwd('..')) + '/logs/'  # 项目根目录下/logs 保存日志
         # 获取当前日志的目录
         log_path = os.path.abspath(os.curdir) + '/logs/'
         # 如果case组织结构式 /testsuit/featuremodel/xxx.py ， 那么得到的相对路径的父路径就是项目根目录
@@ -26,7 +24,7 @@ class Logger(object):
         log_name = log_path + rq + '.txt'
 
         # 创建一个handler，用于写入日志文件
-        fh = logging.FileHandler(log_name)
+        fh = logging.FileHandler(log_name, encoding='utf-8')
         # 设置消息级别
         fh.setLevel(logging.INFO)
 
@@ -44,6 +42,5 @@ class Logger(object):
         self.logger.addHandler(fh)
         self.logger.addHandler(ch)
 
-
-def getlog(self):
-    return self.logger
+    def get_log(self):
+        return self.logger
