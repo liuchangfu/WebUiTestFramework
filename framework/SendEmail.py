@@ -21,7 +21,7 @@ class SendMail(object):
         print('The new report name: {0}'.format(new_report_name))
         return new_report_name  # 返回的是测试报告的名字
 
-    # 该函数的目的是为了 准备发送邮件的的消息内容
+    # 该函数的目的是为了准备发送邮件的的消息内容
     def take_messages(self):
         new_report = self.get_report()
         self.msg = MIMEMultipart()

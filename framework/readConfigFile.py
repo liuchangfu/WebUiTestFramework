@@ -14,11 +14,12 @@ class ReadConfig(object):
         self.config = configparser.ConfigParser()
         self.config.read(configPath)
 
-    # get some http info from file:config.ini
+    # 从config.ini中读取url地址
     def get_http(self, name):
         value = self.config.get("HTTP", name)
         return value
 
+    # 从config.ini中读取email地址
     def get_email(self, name):
         value = self.config.get("EMAIL", name)
         return value

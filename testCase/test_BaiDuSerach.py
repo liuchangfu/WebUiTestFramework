@@ -3,8 +3,7 @@ import unittest
 from framework.logger import Logger
 from selenium import webdriver
 from BasePage.BaiDuPage import BaiDuSerach
-import time
-from selenium.webdriver.common.by import By
+
 
 mylog = Logger(logger="百度页面搜索页面").get_log()
 
@@ -24,7 +23,6 @@ class TestBaiDuSerach(unittest.TestCase):
             page.open()
             page.serach_text_input('selenium')
             page.serach_click()
-            # time.sleep(2)
             page.driver_wait('selenium')
             self.assertEqual(page.get_title(), 'selenium_百度搜索')
             mylog.info('百度页面搜索页面,测试完成,预期结果与实际结果相符，测试通过!!!')
