@@ -15,14 +15,14 @@ class BasePage(object):
         self.driver = driver
         self.url = base_url
 
-    # 打开页面，校验页面链接是否加载正确
+    # 打开页面
     def _open(self, url):
         self.driver.get(url)
         self.driver.maximize_window()
         # 使用assert进行校验，打开的链接地址是否与配置的地址一致，调用on_page()方法
         # assert self.on_page(page_title), '打开页面失败:%s' % url
 
-    # 重写元素定位方法
+    # 重写元素定位方法,参数传入方式为元组
     def find_element(self, *loc):
         try:
             return self.driver.find_element(*loc)
@@ -57,7 +57,7 @@ class BasePage(object):
         except AttributeError:
             print('%s页面未能找到%元素' % (self, loc))
 
-    # 显式等待
+    # 显式等待,time的单位为秒
     def wait(self, time):
         self.driver.implicitly_wait(time)
 

@@ -6,7 +6,8 @@ import time
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
-reportPath = os.path.join(os.getcwd(), 'testReports')  # 测试报告的路径
+# 测试报告的路径
+reportPath = os.path.join(os.getcwd(), 'testReports')
 
 print(reportPath)
 
@@ -25,19 +26,22 @@ class SendMail(object):
     def take_messages(self):
         new_report = self.get_report()
         self.msg = MIMEMultipart()
-        self.msg['Subject'] = 'XXX接口自动化测试报告'  # 邮件的标题
+        # 邮件的标题
+        self.msg['Subject'] = 'XXX接口自动化测试报告'
+        # # 邮件的发送时间
         self.msg['date'] = time.strftime('%a, %d %b %Y %H:%M:%S %z')
-
+        # 读取测试报告的内容
         with open(os.path.join(reportPath, new_report), 'rb') as f:
-            mail_body = f.read()  # 读取测试报告的内容
-        html = MIMEText(mail_body, _subtype='html', _charset='utf-8')  # 将测试报告的内容放在 邮件的正文当中
-        self.msg.attach(html)  # 将html附加在msg里
-
-        # html附件    下面是将测试报告放在附件中发送
+            mail_body = f.read()
+        # 将测试报告的内容放在 邮件的正文当中
+        html = MIMEText(mail_body, _subtype='html', _charset='utf-8')
+        # 将html附加在msg里
+        self.msg.attach(html)
+        # 将测试报告放在附件中发送
         att1 = MIMEText(mail_body, 'base64', 'utf-8')
         att1["Content-Type"] = 'application/octet-stream'
-
-        att1["Content-Disposition"] = 'attachment; filename="TestReport.html"'  # 这里的filename可以任意写，写什么名字，附件的名字就是什么
+        # 这里的filename可以任意写，写什么名字，附件的名字就是什么
+        att1["Content-Disposition"] = 'attachment; filename="TestReport.html"'
         self.msg.attach(att1)
 
     def send(self):
@@ -51,6 +55,7 @@ class SendMail(object):
         smtp = smtplib.SMTP()
         smtp.connect('smtp.xxxx.com')
         smtp.ehlo()
+        # 如果发送邮件方是qq邮箱，这里的密码为授权码，而QQ邮箱登录密码
         smtp.login('xxx@xxxx.com', 'xxxxx')
         smtp.sendmail(self.msg['from'], toaddrs, self.msg.as_string())  # 发送邮件
         smtp.close()
