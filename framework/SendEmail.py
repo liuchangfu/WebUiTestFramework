@@ -13,6 +13,9 @@ print(reportPath)
 
 
 class SendMail(object):
+    """
+    发送邮件
+    """
 
     # 该函数的作用是为了在测试报告的路径下找到最新的测试报告
     def get_report(self):
@@ -44,6 +47,7 @@ class SendMail(object):
         att1["Content-Disposition"] = 'attachment; filename="TestReport.html"'
         self.msg.attach(att1)
 
+    # 发送邮件到目标邮箱，测试报告以附件形式发送
     def send(self):
         # recipients = ['xxxx@xxxx.com', 'xxxx@qq.com', 'xxx@xxxxx.com']  # 发送给多个人
         recipients = ['xxxxx@xxxx.com']  # 发送给一个人

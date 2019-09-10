@@ -2,12 +2,12 @@
 from BasePage.Base import BasePage
 from selenium.webdriver.common.by import By
 
-"""
- 以百度为例，定位百度搜索页面的操作行为，如输入查询关键字（input_username）和点击百度一下按钮（input_password）
-"""
-
 
 class BaiDuSerach(BasePage):
+    """
+     以百度搜索为例，定位百度搜索页面的操作行为，如输入查询关键字（input_username）和点击百度一下按钮（input_password）
+    """
+
     # 定位器，通过元素属性定位元素
     serach_text = (By.ID, 'kw')
     serach_btn = (By.ID, 'su')

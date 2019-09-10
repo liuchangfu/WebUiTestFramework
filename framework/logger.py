@@ -5,13 +5,11 @@ import time
 
 
 class Logger(object):
+    '''
+    指定保存日志的文件路径，日志级别，以及将日志存入到指定的文件中
+    '''
 
     def __init__(self, logger):
-        '''
-            指定保存日志的文件路径，日志级别，以及调用文件
-            将日志存入到指定的文件中
-        '''
-
         # 创建一个logger
         self.logger = logging.getLogger(logger)
         self.logger.setLevel(logging.DEBUG)
