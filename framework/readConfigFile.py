@@ -45,6 +45,6 @@ class ReadConfig(object):
 #
 # b = con.get_email_host('EMAIL_HOST')
 # print(b)
-
-c = ReadConfig().get_email_password('EMAIL_PASSWORD')
-print(c)
+#
+# c = ReadConfig().get_email_password('EMAIL_PASSWORD')
+# print(c)

@@ -4,16 +4,19 @@ from framework.logger import Logger
 from selenium import webdriver
 from BasePage.BaiDuPage import BaiDuSerach
 
-
 mylog = Logger(logger="百度页面搜索页面").get_log()
 
 
 class TestBaiDuSerach(unittest.TestCase):
+    """
+    测试类方法，该类必继承unittest.TestCase
+    """
 
     @classmethod
     def setUpClass(cls):
         cls.driver = webdriver.Firefox()
 
+    # 测试用例，输入搜索关键词，最后加入断言
     def test_serach(self):
         try:
             driver = self.driver
@@ -28,7 +31,6 @@ class TestBaiDuSerach(unittest.TestCase):
             mylog.info('百度页面搜索页面,测试完成,预期结果与实际结果相符，测试通过!!!')
         except AssertionError as e:
             mylog.error("断言出现失败：%s" % e)
-
 
     @classmethod
     def tearDownClass(cls):
