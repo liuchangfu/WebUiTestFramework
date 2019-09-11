@@ -26,7 +26,7 @@ class Logger(object):
         # 设置消息级别
         fh.setLevel(logging.INFO)
 
-        # 再创建一个handler，用于输出到控制台
+        # 创建一个handler，用于输出到控制台
         ch = logging.StreamHandler()
         # 设置消息级别
         ch.setLevel(logging.INFO)

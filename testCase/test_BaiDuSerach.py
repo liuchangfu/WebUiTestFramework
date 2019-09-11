@@ -9,7 +9,7 @@ mylog = Logger(logger="百度页面搜索页面").get_log()
 
 class TestBaiDuSerach(unittest.TestCase):
     """
-    测试类方法，该类必继承unittest.TestCase
+    测试类方法，该类必继承unittest.TestCase类
     """
 
     @classmethod

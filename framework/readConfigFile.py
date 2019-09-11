@@ -10,15 +10,20 @@ print(configPath)
 class ReadConfig(object):
     """
     读取配置文件，如果配置文件有中文的话， 需要在read方法中加入encoding='utf-8'参数，不然会提示UnicodeDecodeError错误,
-    如果有配置文件有新增的配置项，直接按下面的套路写代码，最后将返回值给调用方
+    如果有配置文件有新增的配置项，直接按下面的套路写代码，最后将返回值返回给调用方
     """
 
     def __init__(self):
         self.config = configparser.ConfigParser()
         self.config.read(configPath, encoding='utf-8')
 
-    # 从config.ini中[HTTP]配置项读取url地址
-    def get_http(self, name):
+    # 从config.ini中读取[HTTP]配置项读取url地址
+    def get_url(self, name):
+        value = self.config.get("HTTP", name)
+        return value
+
+    # 从config.ini中读取[HTTP]配置项读取port
+    def get_port(self, name):
         value = self.config.get("HTTP", name)
         return value
 

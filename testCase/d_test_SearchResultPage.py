@@ -8,7 +8,8 @@ from framework import readConfigFile
 from framework.logger import Logger
 
 config = readConfigFile.ReadConfig()
-mylog = Logger(logger="SearchResultPage").getlog()
+mylog = Logger(logger="SearchResultPage").get_log()
+
 
 class SearchResultPage(unittest.TestCase):
 

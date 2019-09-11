@@ -1,0 +1,27 @@
+-
+  url: /api/user/login
+  method: post
+  datail: 正常登录
+  data:
+    username: joseph
+    passwd: aA123456
+  check:
+    userId: 1
+    error_code: 0
+-
+  url: /api/user/login
+  method: post
+  datail: 密码错误
+  data:
+    username: joseph
+    passwd: aA123123
+  check:
+    error_code: 3007
+-
+  url: /api/user/login
+  method: post
+  datail: 密码不传
+  data:
+    username: joseph
+  check:
+    error_code: 3001

@@ -6,7 +6,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 class BasePage(object):
     """
-    BasePage封装所有的页面的公用方法，例如driver,url,FindElement等
+    二次封装所有selenium api的方法，例如打开页面等
     """
 
     # 初始化driver,url等
@@ -61,7 +61,7 @@ class BasePage(object):
     def wait(self, time):
         self.driver.implicitly_wait(time)
 
-    # 获取当前见面title
+    # 获取当前页面title
     def get_title(self):
         return self.driver.title
 
