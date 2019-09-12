@@ -18,6 +18,5 @@ class GetTestCaseYamlConfig(object):
             return text
 
 
-
 t1 = GetTestCaseYamlConfig.get_testcase_yaml_config()  # 静态方法无需实例化,直接用类名.方法名调用
 print(t1)
