@@ -17,7 +17,7 @@ class TestBaiDuSerach(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.driver = webdriver.Firefox()
+        cls.driver = webdriver.Chrome()
 
     @data(['seleniun', 'selenium_百度搜索'], ['java', 'java_百度搜索'], ['php', 'php_百度搜索'])
     @unpack
@@ -38,7 +38,6 @@ class TestBaiDuSerach(unittest.TestCase):
         except AssertionError as e:
             mylog.error("断言失败，搜索关键词为：%s，实际结果为：%s" % (keyword, result))
             raise
-
 
     @classmethod
     def tearDownClass(cls):

@@ -65,7 +65,6 @@ class BasePage(object):
     def get_title(self):
         return self.driver.title
 
-
     # 隐式等待
     def driver_wait(self, title):
         try:
