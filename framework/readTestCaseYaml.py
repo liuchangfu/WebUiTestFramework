@@ -3,13 +3,21 @@ import os
 import yaml
 
 
-def get_yaml():
-    path = os.pardir + '\\testConfig\\testcase.yaml'
-    with open(path, 'r', encoding='utf-8') as f:
-        cfg = f.read()
-        text = yaml.load(cfg)
-        return text
+class GetTestCaseYamlConfig(object):
+    """
+    静态方法由类调用，无默认参数。将实例方法参数中的self去掉，然后在方法定义上方加上@staticmethod，就成为静态方法。
+    它属于类，和实例无关。建议只使用类名.静态方法的调用方式。
+    """
+
+    @staticmethod
+    def get_testcase_yaml_config():
+        path = os.pardir + '\\testConfig\\testcase.yaml'
+        with open(path, 'r', encoding='utf-8') as f:
+            cfg = f.read()
+            text = yaml.load(cfg)
+            return text
 
 
-t1 = get_yaml()
+
+t1 = GetTestCaseYamlConfig.get_testcase_yaml_config()  # 静态方法无需实例化,直接用类名.方法名调用
 print(t1)
