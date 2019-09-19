@@ -65,10 +65,13 @@ class BasePage(object):
     def get_title(self):
         return self.driver.title
 
-
     # 隐式等待
     def driver_wait(self, title):
         try:
             WebDriverWait(self.driver, 5).until(EC.title_contains(title))
         except:
             print('未获取到网页标题！')
+
+    # 获取网页源代码
+    def get_page_source(self):
+        return self.driver.page_source

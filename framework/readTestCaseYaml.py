@@ -20,3 +20,8 @@ class GetTestCaseYamlConfig(object):
 
 t1 = GetTestCaseYamlConfig.get_testcase_yaml_config()  # 静态方法无需实例化,直接用类名.方法名调用
 print(t1)
+print(t1[0])
+print(t1[0]['username'])
+print(t1[0]['password'])
+print(t1[1])
+print(t1[2])

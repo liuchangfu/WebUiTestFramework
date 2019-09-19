@@ -16,28 +16,16 @@ class GetYamlConfig(object):
             text = yaml.load(cfg)
             return text
 
-    @staticmethod
-    def get_baidu_serach_yaml():
-        path = os.pardir + '\\testConfig\\baiduserach.yaml'
-        with open(path, 'r', encoding='utf-8') as f:
-            cfg = f.read()
-            text = yaml.load(cfg)
-            return text
+
+try:
+    t1 = GetYamlConfig.get_yaml_config()  # 静态方法无需实例化,直接用类名.方法名调用
+    print(t1)
+    print(t1['EMAIL'])
+    print(t1['EMAIL'][0]['EMAIL_HOST'])
+    print(t1['EMAIL'][1]['EMAIL_USER'])
+    print(t1['EMAIL'][2]['EMAIL_PASSWORD'])
+    print(t1['EMAIL'][3]['EMAIL_PASSWORD'])
+except IndexError:
+    print('超出边界')
 
 
-# try:
-#     t1 = GetYamlConfig.get_yaml_config()  # 静态方法无需实例化,直接用类名.方法名调用
-#     print(t1)
-#     print(t1['EMAIL'])
-#     print(t1['EMAIL'][0]['EMAIL_HOST'])
-#     print(t1['EMAIL'][1]['EMAIL_USER'])
-#     print(t1['EMAIL'][2]['EMAIL_PASSWORD'])
-#     print(t1['EMAIL'][3]['EMAIL_PASSWORD'])
-# except IndexError:
-#     print('超出边界')
-
-t2 = GetYamlConfig.get_baidu_serach_yaml()
-print(t2)
-# print('t2的长度为:', len(t2))
-# for data in range(len(t2)):
-#     print(t2[data])
