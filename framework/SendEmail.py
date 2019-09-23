@@ -1,6 +1,6 @@
 # coding:utf-8
 
-import os, sys
+import os
 import smtplib
 import time
 from email.mime.text import MIMEText
