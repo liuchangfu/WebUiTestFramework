@@ -16,8 +16,8 @@ class Logger(object):
         # 获取当前时间
         rq = time.strftime('%Y%m%d%H%M', time.localtime(time.time()))
         # 获取当前日志的目录
-        log_path = os.path.abspath(os.curdir) + '/logs/'
-        # 如果case组织结构式 /testsuit/featuremodel/xxx.py ， 那么得到的相对路径的父路径就是项目根目录
+        log_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'logs')
+        # log_path = os.path.abspath(os.curdir) + '/logs/'
         # 日志文件的名字
         log_name = log_path + rq + '.txt'
 
