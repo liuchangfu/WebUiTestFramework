@@ -16,14 +16,11 @@ class GetYamlConfig(object):
     def get_yaml_config():
         with open(path, 'r', encoding='utf-8') as f:
             cfg = f.read()
-            text = yaml.load(cfg)
+            text = yaml.load(cfg, Loader=yaml.FullLoader)
         return text
 
     def __getitem__(self, item):
         return self.get_yaml_config()[item]
-
-
-
 
 # try:
 #     t1 = GetYamlConfig.get_yaml_config()  # 静态方法无需实例化,直接用类名.方法名调用

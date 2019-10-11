@@ -16,12 +16,12 @@ class Logger(object):
         # 获取当前时间
         rq = time.strftime('%Y%m%d%H%M', time.localtime(time.time()))
         # 获取当前日志的目录
-        log_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'logs')
-        print(log_path)
+        log_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'logs\\')
+        print('log_path', log_path)
         # log_path = os.path.abspath(os.curdir) + '/logs/'
         # 日志文件的名字
         log_name = log_path + rq + '.txt'
-        print(log_name)
+        print('log_name', log_name)
 
         # 创建一个handler，用于写入日志文件
         fh = logging.FileHandler(log_name, encoding='utf-8')

@@ -16,7 +16,7 @@ class GetTestCaseYamlConfig(object):
     def get_testcase_yaml_config():
         with open(path, 'r', encoding='utf-8') as f:
             cfg = f.read()
-            text = yaml.load(cfg)
+            text = yaml.load(cfg, Loader=yaml.FullLoader)
         return text
 
     def __getitem__(self, item):
