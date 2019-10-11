@@ -17,6 +17,7 @@ class Logger(object):
         rq = time.strftime('%Y%m%d%H%M', time.localtime(time.time()))
         # 获取当前日志的目录
         log_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'logs')
+        print(log_path)
         # log_path = os.path.abspath(os.curdir) + '/logs/'
         # 日志文件的名字
         log_name = log_path + rq + '.txt'
