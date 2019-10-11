@@ -21,6 +21,7 @@ class Logger(object):
         # log_path = os.path.abspath(os.curdir) + '/logs/'
         # 日志文件的名字
         log_name = log_path + rq + '.txt'
+        print(log_name)
 
         # 创建一个handler，用于写入日志文件
         fh = logging.FileHandler(log_name, encoding='utf-8')
