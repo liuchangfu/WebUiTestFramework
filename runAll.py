@@ -1,9 +1,9 @@
 import sys
 sys.path.append("../")
-from framework import HTMLTestRunner
 import os
 import unittest
 import time
+from framework import HTMLTestRunner
 from framework.SendEmail import SendMail
 
 # 设置报告文件保存路径
@@ -22,7 +22,7 @@ suite = unittest.TestLoader().discover("testCase")
 
 if __name__ == '__main__':
     # 初始化一个HTMLTestRunner实例对象，用来生成报告
-    runner = HTMLTestRunner.HTMLTestRunner(stream=fp, title="项目接口自动化测试报告", description="用例测试情况")
+    runner = HTMLTestRunner.HTMLTestRunner(stream=fp, title="自动化测试报告", description="用例测试情况")
     # 开始执行测试套件
     runner.run(suite)
     fp.close()

@@ -2,6 +2,7 @@
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium import webdriver
 from selenium.webdriver.support import expected_conditions as EC
+from loguru import logger
 
 
 class BasePage(object):
@@ -75,3 +76,5 @@ class BasePage(object):
     # 获取网页源代码
     def get_page_source(self):
         return self.driver.page_source
+
+
