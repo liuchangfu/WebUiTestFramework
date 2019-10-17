@@ -3,8 +3,9 @@ import yaml
 
 # 获取配置文件路径
 path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'testConfig', 'config.yaml')
-print(path)
 
+
+# print(path)
 
 class GetYamlConfig(object):
     """

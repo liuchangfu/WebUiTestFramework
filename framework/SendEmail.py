@@ -1,5 +1,4 @@
 # coding:utf-8
-
 import os
 import smtplib
 import time
@@ -9,15 +8,15 @@ from framework import readConfigYaml
 
 # 读取邮箱服务器，发件人和密码
 t1 = readConfigYaml.GetYamlConfig()
-print(t1['EMAIL'])
+# print(t1['EMAIL'])
 EMAIL_HOST = t1['EMAIL'][0]['EMAIL_HOST']
 EMAIL_USER = t1['EMAIL'][1]['EMAIL_USER']
 EMAIL_PASSWORD = t1['EMAIL'][2]['EMAIL_PASSWORD']
-print('邮箱主机:%s,邮箱用户名:%s,邮箱密码为:%s' % (EMAIL_HOST, EMAIL_USER, EMAIL_PASSWORD))
+# print('邮箱主机:%s,邮箱用户名:%s,邮箱密码为:%s' % (EMAIL_HOST, EMAIL_USER, EMAIL_PASSWORD))
 
 # 测试报告的路径
 reportPath = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'testReports')
-print(reportPath)
+# print(reportPath)
 
 
 class SendMail(object):

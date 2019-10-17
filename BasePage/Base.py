@@ -28,7 +28,8 @@ class BasePage(object):
         try:
             return self.driver.find_element(*loc)
         except:
-            print('%s页面未能找到%s元素！' % (self, loc))
+            # print('%s页面未能找到%s元素！' % (self, loc))
+            logger.info('{}页面未能找到{}元素', (self, loc))
 
     # 重写switch_to方法
     def switch_to_frame(self, loc):
@@ -56,7 +57,8 @@ class BasePage(object):
                 self.driver.find_element(*loc).clear()
                 self.driver.find_element(*loc).send_keys(vaule)
         except AttributeError:
-            print('%s页面未能找到%元素' % (self, loc))
+            # print('%s页面未能找到%元素' % (self, loc))
+            logger.info('{}页面未能找到{}元素', (self, loc))
 
     # 显式等待,time的单位为秒
     def wait(self, time):
@@ -71,10 +73,15 @@ class BasePage(object):
         try:
             WebDriverWait(self.driver, 5).until(EC.title_contains(title))
         except:
-            print('未获取到网页标题！')
+            logger.info('未获取到网页标题！')
 
     # 获取网页源代码
     def get_page_source(self):
         return self.driver.page_source
 
-
+    # 截图方法
+    def save_screens(self, directory):
+        try:
+            return self.driver.save_screenshot(directory)
+        except BaseException as msg:
+            logger.info('截图失败:{}', msg)

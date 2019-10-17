@@ -7,6 +7,7 @@ from BasePage.BaiDuPage import BaiDuSerach
 from ddt import ddt, unpack, data
 import time
 from loguru import logger
+from framework.save_screenshot import Save_Screen
 
 
 # mylog = Logger(logger="百度页面搜索页面").get_log()
@@ -46,11 +47,14 @@ class TestBaiDu_Serach(unittest.TestCase):
             print(page.get_page_source())
             logger.info('断言校验开始')
             self.assertEqual(page.get_title(), result)
-            logger.info('百度搜索页面，预期结果:{},实际结果:{}', keyword, result)
+            logger.info('百度搜索页面，预期结果:{},实际结果:{},测试通过。', keyword, result)
             # mylog.info('百度页面搜索,测试完成,预期结果与实际结果相符，测试通过!!!')
         except AssertionError:
             # mylog.error("断言失败，搜索关键词为：%s，实际结果为：%s" % (keyword, result))
-            logger.info('百度搜索页面断言失败，预期结果:{},实际结果:{}', keyword, result)
+            logger.info('百度搜索页面，预期结果:{},实际结果:{}，实际结果与预期结不相等，断言失败！！！', keyword, result)
+            directory = Save_Screen('百度测试').save_screen()
+            logger.info(directory)
+            page.save_screens(directory)
             raise
 
     @classmethod
