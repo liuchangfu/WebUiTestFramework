@@ -1,4 +1,5 @@
 import sys
+
 sys.path.append("../")
 import os
 import unittest
@@ -14,10 +15,9 @@ report_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'testRepo
 # 获取系统当前时间
 now = time.strftime("%Y-%m-%d-%H_%M_%S", time.localtime(time.time()))
 
-
 # 设置报告名称格式
 HtmlFile = SaveReport().save_path()
-logger.info('打印报告目录:{}',HtmlFile)
+logger.info('打印报告目录:{}', HtmlFile)
 fp = open(HtmlFile, "wb")
 
 # 构建suite

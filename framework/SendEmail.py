@@ -90,4 +90,4 @@ class SendMail(object):
 #     sendMail.send()
 
 
-s1 = SendMail().get_report()
+# s1 = SendMail().get_report()

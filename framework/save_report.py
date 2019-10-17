@@ -8,6 +8,12 @@ class SaveReport(object):
 
     def __init__(self):
         self.dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'testReports\\')
+        try:
+            if not os.path.exists(self.dir):
+                os.makedirs(self.dir)
+                logger.info('目录新建成功:{}', self.dir)
+        except BaseException as msg:
+            logger.info('新建目录失败：', msg)
         self.report_create_time = time.strftime('%Y-%m-%d-%H_%M_%S', time.localtime())
         self.directory_created_time = time.strftime('%Y-%m-%d', time.localtime())
 
