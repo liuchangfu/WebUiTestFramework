@@ -5,15 +5,19 @@ import unittest
 import time
 from framework import HTMLTestRunner
 from framework.SendEmail import SendMail
+from framework.save_report import SaveReport
+from loguru import logger
 
 # 设置报告文件保存路径
-report_path = os.path.abspath(os.curdir) + '/testReports/'
+report_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'testReports\\', )
 
 # 获取系统当前时间
 now = time.strftime("%Y-%m-%d-%H_%M_%S", time.localtime(time.time()))
 
+
 # 设置报告名称格式
-HtmlFile = report_path + now + ".html"
+HtmlFile = SaveReport().save_path()
+logger.info('打印报告目录:{}',HtmlFile)
 fp = open(HtmlFile, "wb")
 
 # 构建suite
