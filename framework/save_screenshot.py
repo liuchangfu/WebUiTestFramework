@@ -4,8 +4,12 @@ import time
 from loguru import logger
 
 
-class Save_Screen(object):
+class SaveScreen(object):
+    """
+    测试用例运行失败的截图，保存到指定目录，如当天的生成的目录不存在，则自动创建
+    """
 
+    # 初始化数据
     def __init__(self, name):
         self.name = name
         self.dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'screenshot\\')
@@ -18,6 +22,7 @@ class Save_Screen(object):
         self.directory_created_time = time.strftime('%Y-%m-%d', time.localtime())
         self.file_create_time = time.strftime('%Y-%m-%d-%H_%M_%S', time.localtime())
 
+    # 保存测试不通过用例截图到指定目录
     def save_screen(self):
         try:
             global save_directory
@@ -32,4 +37,4 @@ class Save_Screen(object):
         return save_directory
 
 
-s1 = Save_Screen('test').save_screen()
+# s1 = SaveScreen('test').save_screen()

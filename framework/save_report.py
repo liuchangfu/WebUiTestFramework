@@ -5,7 +5,11 @@ from loguru import logger
 
 
 class SaveReport(object):
+    """
+    测试报告保存到指定目录，如当天的生成的测试报告目录不存在，则自动创建
+    """
 
+    # 初始化数据
     def __init__(self):
         self.dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'testReports\\')
         try:
@@ -17,6 +21,7 @@ class SaveReport(object):
         self.report_create_time = time.strftime('%Y-%m-%d-%H_%M_%S', time.localtime())
         self.directory_created_time = time.strftime('%Y-%m-%d', time.localtime())
 
+    # 保存测试报告到指定的目录
     def save_path(self):
         try:
             global save_directory
