@@ -127,3 +127,7 @@ dmypy.json
 .idea/
 logs/*.txt
 testReports/*.html
+logs/
+screenshot/
+testReports/
+test_script.py

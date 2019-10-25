@@ -3,6 +3,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium import webdriver
 from selenium.webdriver.support import expected_conditions as EC
 from loguru import logger
+from selenium.common.exceptions import NoSuchElementException, NoSuchWindowException
 
 
 class BasePage(object):
@@ -26,8 +27,9 @@ class BasePage(object):
     # 重写元素定位方法,参数传入方式为元组
     def find_element(self, *loc):
         try:
-            return self.driver.find_element(*loc)
-        except:
+            element = WebDriverWait(self.driver, 30).until(EC.presence_of_element_located(loc))
+            return element
+        except NoSuchElementException:
             # print('%s页面未能找到%s元素！' % (self, loc))
             logger.info('{}页面未能找到{}元素', (self, loc))
 
@@ -48,23 +50,22 @@ class BasePage(object):
         self.driver.execute_script(script)
 
     # 重定义send_keys()方法
-    def send_keys(self, loc, vaule, clear_first=True, click_first=True):
+    def send_keys(self, loc, value, clear_first=True, click_first=True):
         try:
             loc = getattr(self, '_%s' % loc)
             if click_first:
                 self.driver.find_element(*loc).click()
             if clear_first:
                 self.driver.find_element(*loc).clear()
-                self.driver.find_element(*loc).send_keys(vaule)
+                self.driver.find_element(*loc).send_keys(value)
         except AttributeError:
-            # print('%s页面未能找到%元素' % (self, loc))
             logger.info('{}页面未能找到{}元素', (self, loc))
 
     # 重定义click()方法
     def click(self, *loc):
         try:
             self.driver.find_element(*loc).click()
-        except BaseException:
+        except NoSuchElementException:
             logger.info('页面元素不存在：{}', *loc)
 
     # 显式等待,time的单位为秒
@@ -93,17 +94,22 @@ class BasePage(object):
         except BaseException as msg:
             logger.info('截图失败:{}', msg)
 
-    # 切换窗口
+    # 切换到当前窗口
     def switch_to_window(self):
         try:
             windows = self.driver.window_handles
-            self.driver.switch_to.window(windows[-1])
-        except BaseException:
+            logger.info('浏览器打开所有的窗口:{}', windows)
+            cur_windows = windows[-1]
+            logger.info('当前窗口为:{}', cur_windows)
+            self.driver.switch_to.window(cur_windows)
+        except NoSuchWindowException:
             logger.info('切换窗口失败！！', )
 
     # 获取输入框中的文本值
     def get_input_text(self, *loc):
         try:
-            return self.driver.find_element(*loc).text
-        except BaseException:
+            text = self.driver.find_element(*loc).text
+            logger.info('该输入框的文本值为:{}',text)
+            return text
+        except NoSuchElementException:
             logger.info('页面元素不存在，获取文本信息失败：{}', *loc)

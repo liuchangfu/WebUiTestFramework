@@ -18,22 +18,21 @@ class TestCharRoom(unittest.TestCase):
                    rotation='10 MB',
                    encoding='utf-8')
 
-    def test_chatroom_01(self):
 
+    def test_chatroom_01(self):
         driver = self.driver
         url = 'http://kx.1396c.com/'
         logger.info('聊天室页面功能测试开始！')
         page = ChatRoomPage(driver, url)
         logger.info('正在打开主页：{}', url)
         page.open()
-        page.wait(3)
+        logger.info('正在进入幸运飞艇聊天室')
         page.switch_click()
-        logger.info('正在切换窗口！！')
         page.wait(3)
-        page.switch_to_window()
+        page.switch_handler()
         text = page.input_text()
         logger.info(text)
-
+        self.assertEqual(text, '登錄后才可以聊天哦！')
 
     @classmethod
     def tearDownClass(cls):
