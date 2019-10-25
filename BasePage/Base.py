@@ -60,6 +60,13 @@ class BasePage(object):
             # print('%s页面未能找到%元素' % (self, loc))
             logger.info('{}页面未能找到{}元素', (self, loc))
 
+    # 重定义click()方法
+    def click(self, *loc):
+        try:
+            self.driver.find_element(*loc).click()
+        except BaseException:
+            logger.info('页面元素不存在：{}', *loc)
+
     # 显式等待,time的单位为秒
     def wait(self, time):
         self.driver.implicitly_wait(time)
@@ -72,8 +79,8 @@ class BasePage(object):
     def driver_wait(self, title):
         try:
             WebDriverWait(self.driver, 5).until(EC.title_contains(title))
-        except:
-            logger.info('未获取到网页标题！')
+        except BaseException as msg:
+            logger.info('未获取到网页标题:{}', msg)
 
     # 获取网页源代码
     def get_page_source(self):
@@ -85,3 +92,18 @@ class BasePage(object):
             return self.driver.save_screenshot(directory)
         except BaseException as msg:
             logger.info('截图失败:{}', msg)
+
+    # 切换窗口
+    def switch_to_window(self):
+        try:
+            windows = self.driver.window_handles
+            self.driver.switch_to.window(windows[-1])
+        except BaseException:
+            logger.info('切换窗口失败！！', )
+
+    # 获取输入框中的文本值
+    def get_input_text(self, *loc):
+        try:
+            return self.driver.find_element(*loc).text
+        except BaseException:
+            logger.info('页面元素不存在，获取文本信息失败：{}', *loc)

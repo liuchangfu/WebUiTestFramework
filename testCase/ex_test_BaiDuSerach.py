@@ -1,13 +1,12 @@
 # _*_ coding:utf-8 _*_
 import unittest
-from framework.logger import Logger
 from framework.log import GetLog
 from selenium import webdriver
 from BasePage.BaiDuPage import BaiDuSerach
 from ddt import ddt, unpack, data
 import time
 from loguru import logger
-from framework.save_screenshot import Save_Screen
+from framework.save_screenshot import SaveScreen
 
 
 @ddt
@@ -49,7 +48,7 @@ class TestBaiDu_Serach(unittest.TestCase):
             logger.add(GetLog('百度搜索页面测试失败').save_path(), rotation="500 MB", encoding='utf-8',
                        level='ERROR')
             logger.error('百度搜索页面，预期结果:{},实际结果:{}，实际结果与预期结不相等，断言失败！！！', keyword, result)
-            directory = Save_Screen('百度测试').save_screen()
+            directory = SaveScreen('百度测试').save_screen()
             logger.info(directory)
             page.save_screens(directory)
             raise
