@@ -6,7 +6,7 @@ from loguru import logger
 
 class SaveReport(object):
     """
-    测试报告保存到指定目录，如当天的生成的测试报告目录不存在，则自动创建
+    测试报告保存到指定目录
     """
 
     # 初始化数据

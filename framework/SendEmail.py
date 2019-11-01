@@ -7,27 +7,25 @@ from email.mime.multipart import MIMEMultipart
 from framework import readConfigYaml
 from loguru import logger
 
-# 读取邮箱服务器，发件人和密码
-t1 = readConfigYaml.GetYamlConfig()
-# print(t1['EMAIL'])
-EMAIL_HOST = t1['EMAIL'][0]['EMAIL_HOST']
-EMAIL_USER = t1['EMAIL'][1]['EMAIL_USER']
-EMAIL_PASSWORD = t1['EMAIL'][2]['EMAIL_PASSWORD']
-# print('邮箱主机:%s,邮箱用户名:%s,邮箱密码为:%s' % (EMAIL_HOST, EMAIL_USER, EMAIL_PASSWORD))
-
-# 测试报告的路径
-reportPath = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'testReports\\')
-
 
 class SendMail(object):
     """
     发送邮件
     """
 
+    def __init__(self):
+        self.t1 = readConfigYaml.GetYamlConfig()
+        self.EMAIL_HOST = self.t1['EMAIL'][0]['EMAIL_HOST']
+        self.EMAIL_USER = self.t1['EMAIL'][1]['EMAIL_USER']
+        self.EMAIL_PASSWORD = self.t1['EMAIL'][2]['EMAIL_PASSWORD']
+        logger.info('邮箱地址：{},邮箱用户名：{},邮箱密码:{}', self.EMAIL_HOST, self.EMAIL_HOST, self.EMAIL_PASSWORD)
+        # 测试报告的路径
+        self.reportPath = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'testReports\\')
+
     # 该函数的作用是为了在测试报告的路径下找到最新的测试报告
     def get_report(self):
         # 列出指定目录下的所有文件和子目录
-        dirs = os.listdir(reportPath)
+        dirs = os.listdir(self.reportPath)
         # 把dirs目录下的文件按照创建时间的升序排序
         dirs.sort()
         new_dir = dirs[-1]
@@ -47,11 +45,11 @@ class SendMail(object):
         new_report = self.get_report()
         self.msg = MIMEMultipart()
         # 邮件的标题
-        self.msg['Subject'] = '{}自动化测试报告'.format('百度搜索')
+        self.msg['Subject'] = '{}自动化测试报告'.format('聊天室')
         #  邮件的发送时间
         self.msg['date'] = time.strftime('%a, %d %b %Y %H:%M:%S %z')
         # 读取最新测试报告的内容
-        with open(os.path.join(reportPath, new_report), 'rb') as f:
+        with open(os.path.join(self.reportPath, new_report), 'rb') as f:
             mail_body = f.read()
         # 将测试报告的内容放在邮件的正文当中
         html = MIMEText(mail_body, _subtype='html', _charset='utf-8')
@@ -71,23 +69,22 @@ class SendMail(object):
             recipients = ['shift_1220@163.com']
             self.take_messages()
             # 发送邮件的人
-            self.msg['from'] = EMAIL_USER
+            self.msg['from'] = self.EMAIL_USER
             toaddrs = recipients
             smtp = smtplib.SMTP()
-            smtp.connect(EMAIL_HOST)
+            smtp.connect(self.EMAIL_HOST)
             # 如果发送邮件方是qq邮箱，这里的密码为授权码，而QQ邮箱登录密码
-            smtp.login(EMAIL_USER, EMAIL_PASSWORD)
+            smtp.login(self.EMAIL_USER, self.EMAIL_PASSWORD)
             smtp.sendmail(self.msg['from'], toaddrs, self.msg.as_string())
             smtp.close()
-            print('邮件发送成功！！')
+            logger.info('邮件发送成功。')
         except smtplib.SMTPException:
-            print('邮件发送失败，请检查邮件发送配置信息！！')
+            logger.info('邮件发送失败，请检查邮件发送配置信息！！')
 
 
-#
-# if __name__ == '__main__':
-#     sendMail = SendMail()
-#     sendMail.send()
+if __name__ == '__main__':
+    sendMail = SendMail()
+    sendMail.send()
 
 
-# s1 = SendMail().get_report()
+s1 = SendMail().get_report()

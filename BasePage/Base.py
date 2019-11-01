@@ -109,7 +109,7 @@ class BasePage(object):
     def get_input_text(self, *loc):
         try:
             text = self.driver.find_element(*loc).text
-            logger.info('该输入框的文本值为:{}',text)
+            logger.info('获取的文本值为:{}', text)
             return text
         except NoSuchElementException:
             logger.info('页面元素不存在，获取文本信息失败：{}', *loc)

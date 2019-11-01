@@ -6,7 +6,7 @@ from loguru import logger
 
 class SaveScreen(object):
     """
-    测试用例运行失败的截图，保存到指定目录，如当天的生成的目录不存在，则自动创建
+    测试用例运行失败的截图
     """
 
     # 初始化数据
