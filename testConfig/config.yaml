@@ -1,9 +1,19 @@
-# 接口配置信息
-URL: http://mapi.data.pharmacodia.com
-PORT: 8000
+# 地址
+#URL: https://live2.kk1397.com/room
+URL: http://kx.1396c.com/room
+#PORT: 8000
+
+# Cookies配置
+NAME1 : KX_LIVE_TK
+VAULE1: 3afe52e69f0a49a18e81a6d20a8c74e2
+NAME2 : KX_LIVE_UUID
+VAULE2 : pc-3497046b-59da-4582-8a6f-1d5e1133526b
+DOMAIN : .1396c.com
+
 
 # email配置信息
 EMAIL:
   - EMAIL_HOST: smtp.qq.com
   - EMAIL_USER: 172667104@qq.com
   - EMAIL_PASSWORD: cigdgjujnyxmbhgd
+

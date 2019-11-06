@@ -82,9 +82,9 @@ class SendMail(object):
             logger.info('邮件发送失败，请检查邮件发送配置信息！！')
 
 
-if __name__ == '__main__':
-    sendMail = SendMail()
-    sendMail.send()
-
-
-s1 = SendMail().get_report()
+# if __name__ == '__main__':
+#     sendMail = SendMail()
+#     sendMail.send()
+#
+#
+# s1 = SendMail().get_report()

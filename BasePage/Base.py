@@ -4,6 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.support import expected_conditions as EC
 from loguru import logger
 from selenium.common.exceptions import NoSuchElementException, NoSuchWindowException
+from framework.readConfigYaml import GetYamlConfig
 
 
 class BasePage(object):
@@ -27,10 +28,9 @@ class BasePage(object):
     # 重写元素定位方法,参数传入方式为元组
     def find_element(self, *loc):
         try:
-            element = WebDriverWait(self.driver, 30).until(EC.presence_of_element_located(loc))
+            element = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located(loc))
             return element
         except NoSuchElementException:
-            # print('%s页面未能找到%s元素！' % (self, loc))
             logger.info('{}页面未能找到{}元素', (self, loc))
 
     # 重写switch_to方法
@@ -46,8 +46,10 @@ class BasePage(object):
     #     return page_title in self.driver.title
 
     # 定义run_script()方法，用于执行js脚本
-    def run_script(self, script):
-        self.driver.execute_script(script)
+    def run_script(self, n=1000):
+        js = "var q=document.documentElement.scrollTop=%d" % n
+        logger.info('正在执行下拉操作(默认为下拉1000个象素).')
+        self.driver.execute_script(js)
 
     # 重定义send_keys()方法
     def send_keys(self, loc, value, clear_first=True, click_first=True):
@@ -113,3 +115,27 @@ class BasePage(object):
             return text
         except NoSuchElementException:
             logger.info('页面元素不存在，获取文本信息失败：{}', *loc)
+
+    # 增加cookies
+    def add_cookies(self):
+        dict1 = GetYamlConfig().get_yaml_config()
+        cookies1 = {
+            'name': dict1['NAME1'],
+            'value': dict1['VAULE1'],
+            'domain': dict1['DOMAIN'],
+            'path': '/',
+            'httpOnly': True,
+            'secure': False
+        }
+
+        cookies2 = {
+            'name': dict1['NAME2'],
+            'value': dict1['VAULE2'],
+            'domain': dict1['DOMAIN'],
+            'path': '/',
+            'httpOnly': True,
+            'secure': False
+        }
+        self.driver.add_cookie(cookies1)
+        self.driver.add_cookie(cookies2)
+        self.driver.refresh()
