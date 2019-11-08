@@ -30,6 +30,8 @@ class ChatRoomPage(BasePage):
     loc8 = (By.XPATH, "//div[@class='chat-anchor-list']//div[1]//div[1]//span[2]")
     # 关闭登录弹窗定位器
     loc9 = (By.XPATH, "//span[@class='loginClose']")
+    # 聊天室输入信息文本框定位器
+    loc10 = (By.XPATH, "//div[@class='editor-content']")
 
     # 进入首页后，点击幸运飞艇房间链接
     def switch_click(self):
@@ -86,3 +88,7 @@ class ChatRoomPage(BasePage):
     # 加载我的关注列表娄据完后，再去点击关注按钮
     def ele_loc6_wait(self):
         self.find_element(*self.loc6)
+
+    # 输入聊天信息
+    def input_chat_info(self, text):
+        self.send_keys(self.loc10, text)

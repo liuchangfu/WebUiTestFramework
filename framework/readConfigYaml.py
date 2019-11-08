@@ -23,10 +23,17 @@ class GetYamlConfig(object):
 
 
 
-t1 = GetYamlConfig().get_yaml_config()
+# t1 = GetYamlConfig().get_yaml_config()
+# print(t1['COOKES'])
+# print(t1['COOKES'][0])
+# print(t1['COOKES'][1])
+# print(t1['COOKES'][2])
+# print('-------------------------------------------')
+# print(t1['COOKES'][0]['NAME1'])
+# print(t1['COOKES'][0]['VAULE1'])
+# print(t1['COOKES'][1]['NAME2'])
+# print(t1['COOKES'][1]['VAULE2'])
+# print(t1['COOKES'][2]['DOMAIN'])
 
-print(t1['NAME1'])
-print(t1['NAME2'])
-print(t1['VAULE1'])
-print(t1['VAULE2'])
-print(t1['DOMAIN'])
+
+

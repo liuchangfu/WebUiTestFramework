@@ -52,16 +52,12 @@ class BasePage(object):
         self.driver.execute_script(js)
 
     # 重定义send_keys()方法
-    def send_keys(self, loc, value, clear_first=True, click_first=True):
+    def send_keys(self, loc, value):
         try:
-            loc = getattr(self, '_%s' % loc)
-            if click_first:
-                self.driver.find_element(*loc).click()
-            if clear_first:
-                self.driver.find_element(*loc).clear()
-                self.driver.find_element(*loc).send_keys(value)
-        except AttributeError:
-            logger.info('{}页面未能找到{}元素', (self, loc))
+            self.driver.find_element(*loc).clear()
+            self.driver.find_element(*loc).send_keys(value)
+        except Exception:
+            logger.info('输入{}失败', value)
 
     # 重定义click()方法
     def click(self, *loc):
@@ -120,18 +116,18 @@ class BasePage(object):
     def add_cookies(self):
         dict1 = GetYamlConfig().get_yaml_config()
         cookies1 = {
-            'name': dict1['NAME1'],
-            'value': dict1['VAULE1'],
-            'domain': dict1['DOMAIN'],
+            'name': dict1['COOKES'][0]['NAME1'],
+            'value': dict1['COOKES'][0]['VAULE1'],
+            'domain': dict1['COOKES'][2]['DOMAIN'],
             'path': '/',
             'httpOnly': True,
             'secure': False
         }
 
         cookies2 = {
-            'name': dict1['NAME2'],
-            'value': dict1['VAULE2'],
-            'domain': dict1['DOMAIN'],
+            'name': dict1['COOKES'][1]['NAME2'],
+            'value': dict1['COOKES'][1]['VAULE2'],
+            'domain': dict1['COOKES'][2]['DOMAIN'],
             'path': '/',
             'httpOnly': True,
             'secure': False

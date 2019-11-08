@@ -18,7 +18,7 @@ class SendMail(object):
         self.EMAIL_HOST = self.t1['EMAIL'][0]['EMAIL_HOST']
         self.EMAIL_USER = self.t1['EMAIL'][1]['EMAIL_USER']
         self.EMAIL_PASSWORD = self.t1['EMAIL'][2]['EMAIL_PASSWORD']
-        logger.info('邮箱地址：{},邮箱用户名：{},邮箱密码:{}', self.EMAIL_HOST, self.EMAIL_HOST, self.EMAIL_PASSWORD)
+        # logger.info('邮箱地址：{},邮箱用户名：{},邮箱密码:{}', self.EMAIL_HOST, self.EMAIL_HOST, self.EMAIL_PASSWORD)
         # 测试报告的路径
         self.reportPath = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'testReports\\')
 

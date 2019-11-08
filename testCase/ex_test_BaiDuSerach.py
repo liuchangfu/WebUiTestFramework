@@ -18,6 +18,8 @@ class TestBaiDu_Serach(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.driver = webdriver.Chrome()
+        driver = self.driver
+        url = 'https://www.baidu.com'
         logger.add(GetLog('百度搜索页面测试').save_path(), format="{time:YYYY-MM-DD at HH:mm:ss}--{level}--{message}",
                    retention='7 days',
                    rotation='10 MB',
@@ -29,11 +31,9 @@ class TestBaiDu_Serach(unittest.TestCase):
     def test_serach(self, keyword, result):
         """百度搜索测试"""
         try:
-            driver = self.driver
-            url = 'https://www.baidu.com'
             logger.info('百度页面搜索页面，测试开始....')
-            page = BaiDuSerach(driver, url)
-            logger.info('正在打开页面：{}', url)
+            page = BaiDuSerach(self.driver, self.url)
+            logger.info('正在打开页面：{}', self.url)
             page.open()
             logger.info('输入查询关键词：{}', keyword)
             page.serach_text_input(keyword)
