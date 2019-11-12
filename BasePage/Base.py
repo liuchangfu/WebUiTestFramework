@@ -57,7 +57,7 @@ class BasePage(object):
             self.driver.find_element(*loc).clear()
             self.driver.find_element(*loc).send_keys(value)
         except Exception:
-            logger.info('输入{}失败', value)
+            logger.info('输入{}失败!!!', value)
 
     # 重定义click()方法
     def click(self, *loc):

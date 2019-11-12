@@ -1,15 +1,14 @@
 # 地址
-#URL: https://live2.kk1397.com/room
-URL: http://kx.1396c.com/
+URL: http://kxlive-web-site.nn711.com/
 #PORT: 8000
 
 # Cookies配置
 COOKES:
   - NAME1 : KX_LIVE_TK
-    VAULE1: e8524da9b92e4c2b92ebdbc66f76d2ba
+    VAULE1: ce85202a9a2446809c13ab7dcaafbc6f
   - NAME2 : KX_LIVE_UUID
     VAULE2 : pc-3497046b-59da-4582-8a6f-1d5e1133526b
-  - DOMAIN : .1396c.com
+  - DOMAIN : .nn711.com
 
 
 # email配置信息
