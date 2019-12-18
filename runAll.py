@@ -29,4 +29,4 @@ if __name__ == '__main__':
         # runner1.run(suite)
         runner2.run(suite)
     # 测试结束之后，执行邮件发送报告
-    common.send_mail()
+    # common.send_mail()

@@ -27,12 +27,12 @@ class TestBaiDuSearch(StartEnd):
             page.driver_wait(keyword)
             time.sleep(3)
             self.assertEqual(page.get_title(), result)
-            logger.success('百度搜索页面，预期结果:{},实际结果:{},测试通过。', keyword, result)
+            logger.success('T-百度搜索测试，预期结果:{},实际结果:{},测试通过。', keyword, result)
         except AssertionError:
-            logger.add(common.saved_log('logs', '百度搜索页面测试失败'), encoding='utf-8',
+            logger.add(common.saved_log('F-百度搜索测试'), encoding='utf-8',
                        level='ERROR')
-            logger.error('百度搜索页面，预期结果:{},实际结果:{}，实际结果与预期结不相等，断言失败！！！', keyword, result)
-            common.saved_screenshot('screenshot', '百度搜索测试')
+            logger.error('百度搜索测试，预期结果:{},实际结果:{}，实际结果与预期结不相等，断言失败！！！', keyword, result)
+            page.save_screens(common.saved_screenshot('S-百度搜索测试'))
             raise
 
 

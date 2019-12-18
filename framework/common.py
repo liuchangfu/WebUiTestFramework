@@ -15,8 +15,11 @@ currentNow = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
 
 # 创建目录
 def create_directory(directory):
+    logger.info('directory:{}',directory)
     currentDir = os.path.join(os.path.dirname(os.path.dirname(__file__)), directory + '\\')
+    logger.info('当前目录为:{}', currentDir)
     newDir = currentDir + create_directory_date
+    logger.info('文件目录为:{}', newDir)
     try:
         if not os.path.exists(newDir):
             os.makedirs(newDir)
@@ -27,28 +30,30 @@ def create_directory(directory):
 
 
 # 保存日志文件
-def saved_log(directory, name):
+def saved_log(name, directory='logs'):
+    logger.info('name:{}', name)
     log_path = create_directory(directory) + '\\' + name + '.txt'
     logger.info('日志保存目录为:{}', log_path)
     return log_path
 
 
 # 保存截图文件
-def saved_screenshot(directory, name):
+def saved_screenshot(name, directory='screenshot'):
+    logger.info('name:{}', name)
     screenshot_path = create_directory(directory) + '\\' + name + '_' + currentNow + '.png'
     logger.info('截屏文件保存目录为:{}', screenshot_path)
     return screenshot_path
 
 
 # 保存测试报告
-def saved_report(directory):
+def saved_report(directory='testReports'):
     report_path = create_directory(directory) + '\\' + currentNow + '.html'
     logger.info('测试报告保存目录为:{}', report_path)
     return report_path
 
 
 # 读取配置文件
-def get_yaml_config_file(directory, config_name):
+def get_yaml_config_file(config_name, directory='config'):
     path = os.path.join(os.path.dirname(os.path.dirname(__file__)), directory, config_name)
     with open(path, 'r', encoding='utf-8') as f:
         cfg = f.read()
@@ -58,7 +63,7 @@ def get_yaml_config_file(directory, config_name):
 
 # 获取配置文件中的邮箱主机，邮箱用户名和邮箱密码
 def get_mail_info():
-    data = get_yaml_config_file('config', 'config.yaml')
+    data = get_yaml_config_file('config.yaml')
     email_host = data['EMAIL'][0]['EMAIL_HOST']
     email_user = data['EMAIL'][1]['EMAIL_USER']
     email_password = data['EMAIL'][2]['EMAIL_PASSWORD']
@@ -144,7 +149,6 @@ def get_diff_days(directory):
 
 def cleanup_directory(directory):
     pass
-
 
 
 cleanup_directory('testReports')
