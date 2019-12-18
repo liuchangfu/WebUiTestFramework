@@ -1,8 +1,8 @@
 # _*_ coding:utf-8 _*_
 import unittest
-from framework.log import GetLog
+from framework.logger import GetLog
 from selenium import webdriver
-from BasePage.ChatRoomPage import ChatRoomPage
+from Base.chatroompage import ChatRoomPage
 import time
 from loguru import logger
 from framework.save_screenshot import SaveScreen

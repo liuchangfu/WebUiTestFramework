@@ -1,34 +1,31 @@
 import sys
-
-sys.path.append("../")
 import os
 import unittest
-import time
+from datetime import datetime
 from framework import HTMLTestRunner
-from framework.SendEmail import SendMail
-from framework.save_report import SaveReport
+from framework import BSTestRunner
 from loguru import logger
+from framework import common
+
+sys.path.append("../")
 
 # 设置报告文件保存路径
 report_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'testReports\\', )
 
 # 获取系统当前时间
-now = time.strftime("%Y-%m-%d-%H_%M_%S", time.localtime(time.time()))
+now = datetime.now().strftime('%Y-%m-%d-%H_%M_%S')
+# 测试报告名称
+report_name = common.saved_report('testReports')
 
-# 设置报告名称格式
-HtmlFile = SaveReport().save_path()
-logger.info('打印报告目录:{}', HtmlFile)
-fp = open(HtmlFile, "wb")
-
-# 构建suite
+# 加载testCase文件中测试用例
 suite = unittest.TestLoader().discover("testCase")
-
+# suite = unittest.defaultTestLoader.discover(test_case_dir, pattern='testbaidusearch.py')
 if __name__ == '__main__':
-    # 初始化一个HTMLTestRunner实例对象，用来生成报告
-    runner = HTMLTestRunner.HTMLTestRunner(stream=fp, title="自动化测试报告", description="用例测试情况")
-    # 开始执行测试套件
-    runner.run(suite)
-    fp.close()
+    with open(report_name, 'wb') as f:
+        # runner1 = HTMLTestRunner.HTMLTestRunner(stream=f, title="聊天室自动化测试报告", description="用例测试情况")
+        runner2 = BSTestRunner.BSTestRunner(stream=f, title="聊天室自动化测试报告", description="用例测试情况")
+        # 开始执行测试套件
+        # runner1.run(suite)
+        runner2.run(suite)
     # 测试结束之后，执行邮件发送报告
-    # sendMail = SendMail()
-    # sendMail.send()
+    common.send_mail()
