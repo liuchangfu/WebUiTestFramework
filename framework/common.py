@@ -80,7 +80,6 @@ def get_report():
     new_dir.sort()
     # dirs返回是列表，故通过下标去获取最新的报告
     new_report_name = new_dir[-1]
-    logger.info('最新的测试报告为:{}', report + new_report_name)
     # 返回最新测试报告的文件名
     return report + new_report_name, report_path
 
@@ -128,4 +127,4 @@ def send_mail():
         smtp.close()
         logger.info('邮件发送成功.....')
     except smtplib.SMTPException:
-        logger.info('邮件发送失败，请检查邮件发送配置信息！！')
+        logger.error('邮件发送失败，请检查邮件发送配置信息！！')
