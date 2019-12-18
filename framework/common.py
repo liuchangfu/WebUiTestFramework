@@ -1,5 +1,5 @@
 # _*_ coding:utf-8 _*_
-from datetime import datetime
+from datetime import datetime, date
 import os
 from loguru import logger
 import yaml
@@ -15,7 +15,7 @@ currentNow = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
 
 # 创建目录
 def create_directory(directory):
-    logger.info('directory:{}',directory)
+    logger.info('directory:{}', directory)
     currentDir = os.path.join(os.path.dirname(os.path.dirname(__file__)), directory + '\\')
     logger.info('当前目录为:{}', currentDir)
     newDir = currentDir + create_directory_date
@@ -135,20 +135,17 @@ def send_mail():
         logger.error('邮件发送失败，请检查邮件发送配置信息！！')
 
 
-def get_diff_days(directory):
-    path = os.path.join(os.path.dirname(os.path.dirname(__file__)), directory)
-    now = datetime.now().strftime('%Y-%m-%d')
-    print(now)
-    cleanup_directory = path + '\\' + os.listdir(path)[0]
-    print(cleanup_directory)
-    timestamp = os.path.getatime(cleanup_directory)
-    print(timestamp)
-    time = str(datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d'))
-    print(time)
-
-
 def cleanup_directory(directory):
-    pass
+    path = os.path.join(os.path.dirname(os.path.dirname(__file__)), directory)
+    print('0-------', path)
+    now = datetime.now().strftime('%Y-%m-%d')
+    print('1----------', now)
+    directory_list = os.listdir(path)
+    print('2--------', directory_list)
+    timestamp = os.path.getatime(path + '\\' + directory_list[0])
+    print('3-----', timestamp)
+    time = str(datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d'))
+    print('4------', time)
 
 
 cleanup_directory('testReports')
