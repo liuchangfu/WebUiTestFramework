@@ -1,5 +1,5 @@
 # _*_ coding:utf-8 _*_
-from BasePage.Base import BasePage
+from Base.base import BasePage
 from selenium.webdriver.common.by import By
 
 

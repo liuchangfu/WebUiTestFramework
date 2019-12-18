@@ -4,7 +4,7 @@ from selenium import webdriver
 from selenium.webdriver.support import expected_conditions as EC
 from loguru import logger
 from selenium.common.exceptions import NoSuchElementException, NoSuchWindowException
-from framework.readConfigYaml import GetYamlConfig
+from framework import common
 
 
 class BasePage(object):
@@ -114,7 +114,7 @@ class BasePage(object):
 
     # 增加cookies
     def add_cookies(self):
-        dict1 = GetYamlConfig().get_yaml_config()
+        dict1 = common.get_yaml_config_file('config', 'config.yaml')
         cookies1 = {
             'name': dict1['COOKES'][0]['NAME1'],
             'value': dict1['COOKES'][0]['VAULE1'],
@@ -135,3 +135,5 @@ class BasePage(object):
         self.driver.add_cookie(cookies1)
         self.driver.add_cookie(cookies2)
         self.driver.refresh()
+
+
