@@ -128,3 +128,23 @@ def send_mail():
         logger.info('邮件发送成功.....')
     except smtplib.SMTPException:
         logger.error('邮件发送失败，请检查邮件发送配置信息！！')
+
+
+def get_diff_days(directory):
+    path = os.path.join(os.path.dirname(os.path.dirname(__file__)), directory)
+    now = datetime.now().strftime('%Y-%m-%d')
+    print(now)
+    cleanup_directory = path + '\\' + os.listdir(path)[0]
+    print(cleanup_directory)
+    timestamp = os.path.getatime(cleanup_directory)
+    print(timestamp)
+    time = str(datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d'))
+    print(time)
+
+
+def cleanup_directory(directory):
+    pass
+
+
+
+cleanup_directory('testReports')
