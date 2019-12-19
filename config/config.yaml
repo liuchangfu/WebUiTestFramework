@@ -2,6 +2,10 @@
 URL: http://kxlive-web-site.nn711.com/
 #PORT: 8000
 
+# 当目录删除天数
+DAYS: 5
+
+
 # Cookies配置
 COOKES:
   - NAME1 : KX_LIVE_TK

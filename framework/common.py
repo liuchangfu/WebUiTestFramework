@@ -6,6 +6,7 @@ import yaml
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+import shutil
 
 # 以日期创建二级目录，目录名为2019-12-18
 create_directory_date = datetime.now().strftime('%Y-%m-%d')
@@ -15,11 +16,8 @@ currentNow = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
 
 # 创建目录
 def create_directory(directory):
-    logger.info('directory:{}', directory)
     currentDir = os.path.join(os.path.dirname(os.path.dirname(__file__)), directory + '\\')
-    logger.info('当前目录为:{}', currentDir)
     newDir = currentDir + create_directory_date
-    logger.info('文件目录为:{}', newDir)
     try:
         if not os.path.exists(newDir):
             os.makedirs(newDir)
@@ -31,24 +29,22 @@ def create_directory(directory):
 
 # 保存日志文件
 def saved_log(name, directory='logs'):
-    logger.info('name:{}', name)
     log_path = create_directory(directory) + '\\' + name + '.txt'
-    logger.info('日志保存目录为:{}', log_path)
+    logger.info(f'当前运行的测试日志目录保存在{log_path}目录.', )
     return log_path
 
 
 # 保存截图文件
 def saved_screenshot(name, directory='screenshot'):
-    logger.info('name:{}', name)
     screenshot_path = create_directory(directory) + '\\' + name + '_' + currentNow + '.png'
-    logger.info('截屏文件保存目录为:{}', screenshot_path)
+    logger.info(f'当前运行的测试用例错误截图保存在{screenshot_path}目录.')
     return screenshot_path
 
 
 # 保存测试报告
 def saved_report(directory='testReports'):
     report_path = create_directory(directory) + '\\' + currentNow + '.html'
-    logger.info('测试报告保存目录为:{}', report_path)
+    logger.info(f'当前测试报告保存目录为:{report_path}')
     return report_path
 
 
@@ -95,7 +91,7 @@ def take_messages():
     new_report = get_report()[0]
     msg = MIMEMultipart()
     # 邮件的标题
-    email_title = '聊天室脚本运行'
+    email_title = '聊天室脚本运行测试结果'
     msg['Subject'] = f'{email_title}测试报告'
     #  邮件的发送时间
     msg['date'] = datetime.now().strftime('%a, %d %b %Y %H:%M:%S %z')
@@ -135,17 +131,28 @@ def send_mail():
         logger.error('邮件发送失败，请检查邮件发送配置信息！！')
 
 
+# 清理logs,testReports,screenshot超过5天目录
 def cleanup_directory(directory):
     path = os.path.join(os.path.dirname(os.path.dirname(__file__)), directory)
-    print('0-------', path)
-    now = datetime.now().strftime('%Y-%m-%d')
-    print('1----------', now)
+    # logger.info(f'当前目录:{path}')
     directory_list = os.listdir(path)
-    print('2--------', directory_list)
-    timestamp = os.path.getatime(path + '\\' + directory_list[0])
-    print('3-----', timestamp)
-    time = str(datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d'))
-    print('4------', time)
-
-
-cleanup_directory('testReports')
+    for i in range(len(directory_list)):
+        # 当前日期,以（年,月,日）的格式转换为date类型
+        now = str(datetime.now().strftime('%Y-%m-%d')).split('-')
+        data1 = date(int((now[0])), int(now[1]), int(now[2]))
+        timestamp = os.path.getatime(path + '\\' + directory_list[i])
+        time = str(datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d')).split('-')
+        # 该目录下的子目录创建日期,以（年,月,日）的格式转换为date类型
+        data2 = date(int(time[0]), int(time[1]), int(time[2]))
+        # 该目录下的子目录创建日期距离当前日期相差多少天
+        delta = (data1 - data2).days
+        del_dir = path + '\\' + directory_list[i]
+        data = get_yaml_config_file('config.yaml')
+        if delta > data['DAYS']:
+            try:
+                logger.info('正在的执行删除操作....')
+                shutil.rmtree(del_dir)
+                logger.info(f'{del_dir},删除成功.......')
+            except FileNotFoundError as msg:
+                logger.info(msg)
+                
