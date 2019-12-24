@@ -16,7 +16,7 @@ class StartEnd(unittest.TestCase):
                    encoding='utf-8')
         logger.info('==========setUp==========')
         cls.data = common.get_yaml_config_file('config.yaml')
-        cls.url = cls.data['URL'] + '/room/xyft?roomId=xyft'
+        cls.url = cls.data['URL'] + 'room/xyft?roomId=xyft'
         logger.info(f'当前打开的网址为：{cls.url}"')
         cls.driver = webdriver.Chrome()
         cls.page = ChatRoomPage(cls.driver, cls.url)
