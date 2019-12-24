@@ -4,7 +4,7 @@ from Base.baidupage import BaiDuSearch
 from ddt import ddt, unpack, data
 import time
 from loguru import logger
-from framework.myunit import StartEnd
+from framework.myunit1 import StartEnd
 import unittest
 
 
@@ -24,7 +24,7 @@ class TestBaiDuSearch(StartEnd):
             page = BaiDuSearch(self.driver, self.url)
             logger.info('输入查询关键词：{}', keyword)
             page.baidu_search_action(keyword)
-            page.driver_wait(keyword)
+            page.wait(keyword)
             time.sleep(3)
             self.assertEqual(page.get_title(), result)
             logger.success('T-百度搜索测试，预期结果:{},实际结果:{},测试通过。', keyword, result)

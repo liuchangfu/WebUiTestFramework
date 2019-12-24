@@ -7,6 +7,7 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import shutil
+from Base.base import BasePage
 
 # 以日期创建二级目录，目录名为2019-12-18
 create_directory_date = datetime.now().strftime('%Y-%m-%d')
@@ -30,21 +31,21 @@ def create_directory(directory):
 # 保存日志文件
 def saved_log(name, directory='logs'):
     log_path = create_directory(directory) + '\\' + name + '.txt'
-    logger.info(f'当前运行的测试日志目录保存在{log_path}目录.', )
+    logger.info(f'当前运行的测试日志文件保存在:{log_path}', )
     return log_path
 
 
 # 保存截图文件
 def saved_screenshot(name, directory='screenshot'):
     screenshot_path = create_directory(directory) + '\\' + name + '_' + currentNow + '.png'
-    logger.info(f'当前运行的测试用例错误截图保存在{screenshot_path}目录.')
+    logger.info(f'当前运行的测试用例错误截图保存在：{screenshot_path}')
     return screenshot_path
 
 
 # 保存测试报告
 def saved_report(directory='testReports'):
     report_path = create_directory(directory) + '\\' + currentNow + '.html'
-    logger.info(f'当前测试报告保存目录为:{report_path}')
+    logger.info(f'当前测试报告保存在:{report_path}')
     return report_path
 
 
@@ -134,7 +135,6 @@ def send_mail():
 # 清理logs,testReports,screenshot超过5天目录
 def cleanup_directory(directory):
     path = os.path.join(os.path.dirname(os.path.dirname(__file__)), directory)
-    # logger.info(f'当前目录:{path}')
     directory_list = os.listdir(path)
     for i in range(len(directory_list)):
         # 当前日期,以（年,月,日）的格式转换为date类型
@@ -155,4 +155,16 @@ def cleanup_directory(directory):
                 logger.info(f'{del_dir},删除成功.......')
             except FileNotFoundError as msg:
                 logger.info(msg)
-                
+
+
+# 测试用例断言出错写入日志方法
+def assertion_error(log_name, case_name, expected_result, actual_result):
+    """
+    :param log_name: 日志文件名
+    :param case_name: 测试用例名称
+    :param expected_result: 预期结果
+    :param actual_result: 实际结果
+    :return:无返回值
+    """
+    logger.add(saved_log(log_name), encoding='utf-8', level='ERROR')
+    logger.error(f'{case_name}，预期结果:{expected_result},实际结果:{actual_result}，实际结果与预期结果不相等，断言失败！！！')

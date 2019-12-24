@@ -31,7 +31,7 @@ class BasePage(object):
             element = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located(loc))
             return element
         except NoSuchElementException:
-            logger.info('{}页面未能找到{}元素', (self, loc))
+            logger.info(f'{self}页面未能找到{loc}元素')
 
     # 重写switch_to方法
     def switch_to_frame(self, loc):
@@ -57,7 +57,7 @@ class BasePage(object):
             self.driver.find_element(*loc).clear()
             self.driver.find_element(*loc).send_keys(value)
         except Exception:
-            logger.info('输入{}失败!!!', value)
+            logger.info(f'输入{value}失败!!!')
 
     # 重定义click()方法
     def click(self, *loc):
@@ -67,7 +67,7 @@ class BasePage(object):
             logger.info('页面元素不存在：{}', *loc)
 
     # 显式等待,time的单位为秒
-    def wait(self, time):
+    def imp_wait(self, time):
         self.driver.implicitly_wait(time)
 
     # 获取当前页面title
@@ -75,46 +75,46 @@ class BasePage(object):
         return self.driver.title
 
     # 隐式等待
-    def driver_wait(self, title):
+    def wait(self, title):
         try:
             WebDriverWait(self.driver, 5).until(EC.title_contains(title))
-        except BaseException as msg:
-            logger.info('未获取到网页标题:{}', msg)
+        except Exception as msg:
+            logger.info(f'未获取到网页标题:{msg}')
 
     # 获取网页源代码
     def get_page_source(self):
-        return self.driver.page_source
+        return self.driver.page_source.encode("utf-8")
 
     # 截图方法
     def save_screens(self, directory):
         try:
             return self.driver.save_screenshot(directory)
-        except BaseException as msg:
-            logger.info('截图失败:{}', msg)
+        except Exception as msg:
+            logger.info(f'截图失败:{msg}')
 
     # 切换到当前窗口
     def switch_to_window(self):
         try:
             windows = self.driver.window_handles
-            logger.info('浏览器打开所有的窗口:{}', windows)
+            logger.info(f'浏览器打开所有的窗口:{windows}')
             cur_windows = windows[-1]
-            logger.info('当前窗口为:{}', cur_windows)
+            logger.info(f'当前窗口为:{cur_windows}')
             self.driver.switch_to.window(cur_windows)
         except NoSuchWindowException:
             logger.info('切换窗口失败！！', )
 
     # 获取输入框中的文本值
-    def get_input_text(self, *loc):
+    def get_text(self, *loc):
         try:
             text = self.driver.find_element(*loc).text
-            logger.info('获取的文本值为:{}', text)
+            logger.info(f'获取的文本值为:{text}')
             return text
         except NoSuchElementException:
-            logger.info('页面元素不存在，获取文本信息失败：{}', *loc)
+            logger.info('页面元素不存在，获取文本信息失败：{*loc}')
 
     # 增加cookies
     def add_cookies(self):
-        dict1 = common.get_yaml_config_file('config', 'config.yaml')
+        dict1 = common.get_yaml_config_file('config.yaml')
         cookies1 = {
             'name': dict1['COOKES'][0]['NAME1'],
             'value': dict1['COOKES'][0]['VAULE1'],
@@ -135,5 +135,3 @@ class BasePage(object):
         self.driver.add_cookie(cookies1)
         self.driver.add_cookie(cookies2)
         self.driver.refresh()
-
-

@@ -1,37 +1,19 @@
 # _*_ coding:utf-8 _*_
 import unittest
-from framework.logger import GetLog
+from framework import common
 from selenium import webdriver
 from Base.chatroompage import ChatRoomPage
 import time
 from loguru import logger
-from framework.save_screenshot import SaveScreen
 from ddt import ddt, unpack, data
-from framework.readConfigYaml import GetYamlConfig
+from framework.myunit import StartEnd
 
 
-class TestCharRoom(unittest.TestCase):
+class TestCharRoom(StartEnd):
 
-    @classmethod
-    def setUpClass(cls):
-        cls.config = GetYamlConfig.get_yaml_config()
-        cls.url = cls.config['URL'] + '/xyft?roomId=xyft'
-        cls.driver = webdriver.Chrome()
-        logger.add(GetLog('未登录---聊天室页面测试').save_path(), format="{time:YYYY-MM-DD----HH:mm:ss}--{level}--{message}",
-                   retention='7 days',
-                   rotation='10 MB',
-                   encoding='utf-8')
-        cls.page = ChatRoomPage(cls.driver, cls.url)
-        logger.info('正在打开网站:{}', cls.url)
-        cls.page.open()
-        cls.page.wait(5)
-
-    def test_chatroom1(self):
+    def test_chatroom01(self):
         """未登录:校验聊天输入框默认显示文本"""
         try:
-            # page.switch_click()
-            # page.wait(3)
-            # page.switch_handler()
             logger.info('T-未登录:校验聊天输入框默认显示文本')
             self.page.wait(3)
             text1 = self.page.get_text1()

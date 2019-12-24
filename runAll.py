@@ -26,6 +26,8 @@ report_name = common.saved_report('testReports')
 # 加载testCase文件中测试用例
 suite = unittest.TestLoader().discover("testCase")
 # suite = unittest.defaultTestLoader.discover(test_case_dir, pattern='testbaidusearch.py')
+
+
 if __name__ == '__main__':
     with open(report_name, 'wb') as f:
         # runner1 = HTMLTestRunner.HTMLTestRunner(stream=f, title="聊天室自动化测试报告", description="用例测试情况")
