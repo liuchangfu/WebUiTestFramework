@@ -141,8 +141,8 @@ def cleanup_directory(directory):
         now = str(datetime.now().strftime('%Y-%m-%d')).split('-')
         data1 = date(int((now[0])), int(now[1]), int(now[2]))
         timestamp = os.path.getatime(path + '\\' + directory_list[i])
-        time = str(datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d')).split('-')
         # 该目录下的子目录创建日期,以（年,月,日）的格式转换为date类型
+        time = str(datetime.fromtimestamp(timestamp).strftime('%Y-%m-%d')).split('-')
         data2 = date(int(time[0]), int(time[1]), int(time[2]))
         # 该目录下的子目录创建日期距离当前日期相差多少天
         delta = (data1 - data2).days
