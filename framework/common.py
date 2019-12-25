@@ -8,7 +8,6 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import shutil
 
-
 # 以日期创建二级目录，目录名为2019-12-18
 create_directory_date = datetime.now().strftime('%Y-%m-%d')
 # 当前时间
@@ -44,7 +43,7 @@ def saved_screenshot(name, directory='screenshot'):
 
 # 保存测试报告
 def saved_report(directory='testReports'):
-    report_path = create_directory(directory) + '\\' + currentNow + '.html'
+    report_path = create_directory(directory) + '\\' + currentNow + '_testreport' + '.html'
     logger.info(f'当前测试报告保存在:{report_path}')
     return report_path
 
@@ -153,9 +152,9 @@ def cleanup_directory(directory):
         data = get_yaml_config_file('config.yaml')
         if delta > data['DAYS']:
             try:
-                logger.info('正在的执行删除操作....')
+                logger.info('正在执行删除操作........')
                 shutil.rmtree(del_dir)
-                logger.info(f'{del_dir},删除成功.......')
+                logger.info('目录删除成功............')
             except FileNotFoundError as msg:
                 logger.info(msg)
 
@@ -171,6 +170,3 @@ def assertion_error(log_name, case_name, expected_result, actual_result):
     """
     logger.add(saved_log(log_name), encoding='utf-8', level='ERROR')
     logger.error(f'{case_name}，预期结果:{expected_result},实际结果:{actual_result}，实际结果与预期结果不相等，断言失败！！！')
-
-
-
