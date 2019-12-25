@@ -5,6 +5,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from loguru import logger
 from selenium.common.exceptions import NoSuchElementException, NoSuchWindowException
 from framework import common
+from selenium.webdriver.chrome.options import Options
 
 
 class BasePage(object):
@@ -110,7 +111,7 @@ class BasePage(object):
             logger.info(f'获取的文本值为:{text}')
             return text
         except NoSuchElementException:
-            logger.info('页面元素不存在，获取文本信息失败：{*loc}')
+            logger.info('页面元素不存在，获取文本信息失败：{}', *loc)
 
     # 增加cookies
     def add_cookies(self):
@@ -135,3 +136,9 @@ class BasePage(object):
         self.driver.add_cookie(cookies1)
         self.driver.add_cookie(cookies2)
         self.driver.refresh()
+
+    def headless(self):
+        chrome_options = Options()
+        chrome_options.add_argument('--headless')
+        self.driver = webdriver.Chrome(chrome_options=chrome_options)
+        return self.driver

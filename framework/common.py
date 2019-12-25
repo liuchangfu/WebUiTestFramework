@@ -7,7 +7,7 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import shutil
-from Base.base import BasePage
+
 
 # 以日期创建二级目录，目录名为2019-12-18
 create_directory_date = datetime.now().strftime('%Y-%m-%d')
@@ -57,6 +57,9 @@ def get_yaml_config_file(config_name, directory='config'):
         config_data = yaml.load(cfg, Loader=yaml.FullLoader)
     return config_data
 
+
+# data = get_yaml_config_file('config.yaml')
+# print(data['URL1'])
 
 # 获取配置文件中的邮箱主机，邮箱用户名和邮箱密码
 def get_mail_info():
@@ -168,3 +171,6 @@ def assertion_error(log_name, case_name, expected_result, actual_result):
     """
     logger.add(saved_log(log_name), encoding='utf-8', level='ERROR')
     logger.error(f'{case_name}，预期结果:{expected_result},实际结果:{actual_result}，实际结果与预期结果不相等，断言失败！！！')
+
+
+

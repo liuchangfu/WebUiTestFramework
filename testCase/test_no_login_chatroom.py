@@ -116,6 +116,7 @@ class TestCharRoom(StartEnd):
         except Exception as msg:
             logger.error(f'代码运行出问题了，报错的信息为：{msg}')
 
+    @unittest.skip
     def test_chat_room08(self):
         try:
             logger.info('T-未登录，在线用户列中的关注按钮，能否弹出登录对话框')
@@ -130,6 +131,7 @@ class TestCharRoom(StartEnd):
         except Exception as msg:
             logger.error(f'代码运行出问题了，报错的信息为：{msg}')
 
+    @unittest.skip
     def test_chat_room09(self):
         try:
             logger.info('T-未登录，我的关注，能否弹出登录对话框')
@@ -140,6 +142,101 @@ class TestCharRoom(StartEnd):
         except AssertionError:
             common.assertion_error('F-no_login_test_chat_room', 'test_chat_room09', text, "馬上登錄")
             self.page.save_screens(common.saved_screenshot('test_chat_room09'))
+            raise
+        except Exception as msg:
+            logger.error(f'代码运行出问题了，报错的信息为：{msg}')
+
+    @unittest.skip
+    def test_chat_room10(self):
+        try:
+            logger.info('T-实时竞猜与竞猜主页的最新竞猜，竞猜人是否一致')
+            text = self.page.guess_tab1()
+            self.page.imp_wait(3)
+            self.assertEqual(text, self.page.guess_homepage_new())
+            logger.success(f'预期结果：{text},实际结果：{self.page.guess_homepage_new()}，测试通过！！')
+        except AssertionError:
+            common.assertion_error('F-no_login_test_chat_room', 'test_chat_room09', text,
+                                   self.page.guess_homepage_new())
+            self.page.save_screens(common.saved_screenshot('test_chat_room10'))
+            raise
+        except Exception as msg:
+            logger.error(f'代码运行出问题了，报错的信息为：{msg}')
+
+    @unittest.skip
+    def test_chat_room11(self):
+        try:
+            logger.info('T-实时竞猜与竞猜主页的最新竞猜，竞猜人是否一致')
+            text = self.page.guess_tab1()
+            self.page.imp_wait(3)
+            self.assertEqual(text, self.page.guess_homepage_new())
+            logger.success(f'预期结果：{text},实际结果：{self.page.guess_homepage_new()}，测试通过！！')
+        except AssertionError:
+            common.assertion_error('F-no_login_test_chat_room', 'test_chat_room11', text,
+                                   self.page.guess_homepage_new())
+            self.page.save_screens(common.saved_screenshot('test_chat_room11'))
+            raise
+        except Exception as msg:
+            logger.error(f'代码运行出问题了，报错的信息为：{msg}')
+
+    @unittest.skip
+    def test_chat_room12(self):
+        try:
+            logger.info('T-竞猜排行连赢榜与竞猜主页的排行榜连赢榜，竞猜人是否一致')
+            text = self.page.guess_tab2()
+            self.page.imp_wait(3)
+            self.assertEqual(text, self.page.guess_homepage_rank()[0])
+            logger.success(f'预期结果：{text},实际结果：{self.page.guess_homepage_rank()[0]}，测试通过！！')
+        except AssertionError:
+            common.assertion_error('F-no_login_test_chat_room', 'test_chat_room12', text,
+                                   self.page.guess_homepage_rank()[0])
+            self.page.save_screens(common.saved_screenshot('test_chat_room12'))
+            raise
+        except Exception as msg:
+            logger.error(f'代码运行出问题了，报错的信息为：{msg}')
+
+    @unittest.skip
+    def test_chat_room13(self):
+        try:
+            logger.info('T-竞猜排行赢率榜与竞猜主页的排行榜赢率榜，竞猜人是否一致')
+            text = self.page.guess_tab2_yingyu()
+            self.page.imp_wait(3)
+            self.assertEqual(text, self.page.guess_homepage_rank()[1])
+            logger.success(f'预期结果：{text},实际结果：{self.page.guess_homepage_rank()[1]}，测试通过！！')
+        except AssertionError:
+            common.assertion_error('F-no_login_test_chat_room', 'test_chat_room13', text,
+                                   self.page.guess_homepage_rank()[1])
+            self.page.save_screens(common.saved_screenshot('test_chat_room13'))
+            raise
+        except Exception as msg:
+            logger.error(f'代码运行出问题了，报错的信息为：{msg}')
+
+    @unittest.skip
+    def test_chat_room14(self):
+        try:
+            logger.info('T-竞猜排行赢利榜与竞猜主页的排行榜赢利榜，竞猜人是否一致')
+            text = self.page.guess_tab2_yingli()
+            self.page.imp_wait(3)
+            self.assertEqual(text, self.page.guess_homepage_rank()[2])
+            logger.success(f'预期结果：{text},实际结果：{self.page.guess_homepage_rank()[2]}，测试通过！！')
+        except AssertionError:
+            common.assertion_error('F-no_login_test_chat_room', 'test_chat_room14', text,
+                                   self.page.guess_homepage_rank()[2])
+            self.page.save_screens(common.saved_screenshot('test_chat_room14'))
+            raise
+        except Exception as msg:
+            logger.error(f'代码运行出问题了，报错的信息为：{msg}')
+
+    def test_chat_room15(self):
+        try:
+            logger.info('T-主播预告与首页当前预告排班信息是否一致')
+            text = self.page.chatroom_anchor_preview()
+            self.page.imp_wait(3)
+            self.assertEqual(text, '暫無預告')
+            logger.success(f'预期结果：{text},实际结果：{"暫無預告"}，测试通过！！')
+        except AssertionError:
+            common.assertion_error('F-no_login_test_chat_room', 'test_chat_room15', text,
+                                   '暫無預告')
+            self.page.save_screens(common.saved_screenshot('test_chat_room15'))
             raise
         except Exception as msg:
             logger.error(f'代码运行出问题了，报错的信息为：{msg}')

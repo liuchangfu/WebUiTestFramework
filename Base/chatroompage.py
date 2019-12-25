@@ -3,6 +3,9 @@ from Base.base import BasePage
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 from loguru import logger
+from framework import common
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 
 
 class ChatRoomPage(BasePage):
@@ -44,6 +47,39 @@ class ChatRoomPage(BasePage):
     loc14 = (By.XPATH, '//*[@id="app"]/div[1]/div/div[1]/div[2]/div[3]/div[1]/div[1]/div[1]/div/div[22]/div[1]/img')
     # 聊天信息区,弹出提示信息的定位器
     loc15 = (By.XPATH, "//div[@class='toastB']")
+    # 实时竞猜第一个用户定位器
+    loc16 = (By.XPATH, '//tr[1]//td[1]//span[1]')
+    # 竞猜主页-》最新竞猜第一个用户定位器
+    loc17 = (By.XPATH, '//tr[1]//td[1]//div[1]')
+    # 竞猜排行定位器
+    loc18 = (By.XPATH, "//div[@class='room-right-info']//li[2]")
+    # 竞猜排行-连赢榜第-赢率榜-盈利榜一个用户定位器
+    loc19 = (By.XPATH, "//li[1]//div[1]//div[2]//div[2]")
+    # 竞猜主页-排行榜定位器
+    loc20 = (By.XPATH, "//li[2]//a[1]//span[1]")
+    # 竞猜主页-排行榜-連贏榜第一个用户定位器
+    loc21 = (By.XPATH, "//div[@id='winning']//a[@class='name']")
+    # 竞猜主页-排行榜-贏率榜(10期)第一个用户定位器
+    loc22 = (By.XPATH, "//div[@id='winRate']//li[1]//a[1]")
+    # 竞猜主页-排行榜-連盈利榜（10期）第一个用户定位器
+    loc23 = (By.XPATH, "//div[@id='profitRate']//li[1]//a[1]")
+    # 实时竞猜-赢率榜定位器
+    loc24 = (By.XPATH, "//div[@class='web_mainSection']//div//li[2]")
+    # 竞猜排行-赢率榜第定位器
+    loc25 = (By.XPATH, "//div[@class='gue_navBlock']//li[2]")
+    # 竞猜排行-盈利榜定位器
+    loc26 = (By.XPATH, "//div[@class='gue_navBlock']//li[3]")
+    # 主播预告定位器
+    loc27 = (By.XPATH, "//div[@class='room-right-info']//li[3]")
+    # 主播预告无排班提示信息定位器
+    loc28 = (By.XPATH, "//p[@class='notDataBtn']")
+    # 主播预告中的今天定位器
+    loc29 = (By.XPATH, "//li[@class='roomPart active']//span[@class='date']")
+    # 主播预告中第一位主播昵称
+    loc30 = (By.XPATH, "//li[@class='roomPart active']//div[1]//a[1]//span[1]")
+    # 首页幸运飞艇当前主播
+    loc31 = (By.XPATH,
+             "//div[@class='advanceBlock rb-xyft']//div[@class='contentB advance-content active']//li[1]//div[1]//div[1]//div[1]//span[1]//span[1]//a[1]")
 
     # 输入聊天信息
     def type_chat_msg(self):
@@ -133,3 +169,73 @@ class ChatRoomPage(BasePage):
     def click_my_focus_link(self):
         self.click(*self.loc7)
         return self.get_login_text()
+
+    # 获取实时竞猜第一个用户的昵称
+    def guess_tab1(self):
+        text = self.get_text(*self.loc16)
+        return text
+
+    # 竞猜主页-》最新竞猜第一个用户的名称
+    def guess_homepage_new(self):
+        logger.info('正在启动浏览器隐藏模式，请耐心等候...')
+        self.driver = self.headless()
+        self.url = common.get_yaml_config_file('config.yaml')['URL1'] + 'xyft/guess'
+        logger.info(f'当前打开的url为:{self.url}')
+        self.driver.get(self.url)
+        self.imp_wait(5)
+        text = self.get_text(*self.loc17)
+        self.driver.quit()
+        return text
+
+    # 获取竞猜排行-连赢榜第一个用户的昵称
+    def guess_tab2(self):
+        self.click(*self.loc18)
+        self.imp_wait(3)
+        text = self.get_text(*self.loc19)
+        return text
+
+    # 竞猜主页-》排行榜連贏榜、贏率榜、盈利榜第一个用户的名称
+    def guess_homepage_rank(self):
+        logger.info('正在启动浏览器隐藏模式，请耐心等候...')
+        self.driver = self.headless()
+        self.url = common.get_yaml_config_file('config.yaml')['URL1'] + 'xyft/rank'
+        logger.info(f'当前打开的url为:{self.url}')
+        self.driver.get(self.url)
+        self.imp_wait(5)
+        text1 = self.get_text(*self.loc21)
+        text2 = self.get_text(*self.loc22)
+        text3 = self.get_text(*self.loc23)
+        self.driver.quit()
+        return text1, text2, text3
+
+    # 获取竞猜排行-赢率榜第一个用户的昵称
+    def guess_tab2_yingyu(self):
+        self.click(*self.loc18)
+        self.imp_wait(3)
+        self.click(*self.loc25)
+        return self.get_text(*self.loc19)
+
+    # 获取竞猜排行-盈利榜第一个用户的昵称
+    def guess_tab2_yingli(self):
+        self.click(*self.loc18)
+        self.imp_wait(3)
+        self.click(*self.loc26)
+        self.imp_wait(3)
+        return self.get_text(*self.loc19)
+
+    # 主播排班中第一个主播昵称
+    def chatroom_anchor_preview(self):
+        self.click(*self.loc27)
+        self.imp_wait(3)
+        text = self.get_text(*self.loc28)
+        if text == '暫無預告':
+            logger.info('没有相关排班信息....')
+            return text
+        else:
+            self.click(*self.loc27)
+            self.imp_wait(3)
+            return self.get_text(*self.loc30)
+
+    # 首页主播排班中第一个主播昵称
+    def homepage_anchor_preview(self):
+        return self.get_text(*self.loc31)
