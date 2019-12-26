@@ -10,7 +10,7 @@ from framework import common
 
 sys.path.append("../")
 
-logger.info(f'正在检查testReports,logs和screenshot文件夹下，是否有超过{common.get_yaml_config_file("config.yaml")["DAYS"]}的目录.....')
+logger.info(f'正在检查testReports,logs和screenshot文件夹下，是否有超过创建时间超过{common.get_yaml_config_file("config.yaml")["DAYS"]}天的目录.....')
 common.cleanup_directory('testReports')
 common.cleanup_directory('logs')
 common.cleanup_directory('screenshot')

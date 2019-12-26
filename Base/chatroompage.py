@@ -17,9 +17,9 @@ class ChatRoomPage(BasePage):
     loc_click1 = (By.XPATH, "//div[@class='ip-oneBlock']//li[2]//a[1]")
     # 发送按钮定位器
     loc_click2 = (By.XPATH, "//span[@class='editor-send']")
-    # 聊天信息输入框中，登录链接定位器
+    # 未登录-聊天信息输入框中，登录链接定位器
     loc_click3 = (By.XPATH, "//div[@class='editor-content no-login']//p//span")
-    # 聊天信息输入框中，默认文案定位器
+    # 未登录-聊天信息输入框中，默认文案定位器
     loc_text1 = (By.XPATH, "//div[@class='editor-content no-login']")
     # 弹出提示信息的定位器
     loc_text2 = (By.XPATH, "//div[@class='toast']")
@@ -29,9 +29,9 @@ class ChatRoomPage(BasePage):
     loc5 = (By.XPATH, "//div[@class='say-bar']//span[1]")
     # 在线用户列表，第一个用户定位器
     loc6 = (By.XPATH, "//li[4]//div[1]//div[2]//div[1]")
-    # 我的关注列表定位器
-    loc7 = (By.XPATH, "//div[@class='room-right-bottom-info']//nav[@class='pubHeader_select']//li[3")
-    # 主播推荐，第一个主播定位器
+    # 我的关注定位器
+    loc7 = (By.XPATH, "//div[@class='room-right-bottom-info']//nav[@class='pubHeader_select']//li[3]")
+    # 主播推荐，第一个主播关注按钮定位器
     loc8 = (By.XPATH, "//div[@class='chat-anchor-list']//div[1]//div[1]//span[2]")
     # 关闭登录弹窗定位器
     loc9 = (By.XPATH, "//span[@class='loginClose']")
@@ -80,14 +80,28 @@ class ChatRoomPage(BasePage):
     # 首页幸运飞艇当前主播
     loc31 = (By.XPATH,
              "//div[@class='advanceBlock rb-xyft']//div[@class='contentB advance-content active']//li[1]//div[1]//div[1]//div[1]//span[1]//span[1]//a[1]")
+    # 发言置顶
+    loc32 = (By.XPATH, "//i[@class='icon-select-no']")
+    # 表情定位器
+    loc33 = (By.XPATH, "//i[@class='icon-emoji']")
+    # 表情框中第一个表情
+    loc34 = (By.XPATH, "//div[@class='chat-container']//li[1]//img[1]")
+    # 我的关注列表
+    loc35 = (By.XPATH, "//div[@class='myfoucs']")
+    # 主播列表第一个用户的昵称
+    loc36 = (By.XPATH, "//div[@class='chat-anchor-list']//div[1]//div[1]//span[1]")
 
     # 输入聊天信息
-    def type_chat_msg(self):
-        self.send_keys(*self.loc_click3)
+    def type_chat_msg(self, text):
+        self.send_keys(text, *self.loc10)
 
     # 点击发送按钮
     def click_send_btn(self):
         self.click(*self.loc_click2)
+
+    # 勾上发言置顶
+    def select_icon(self):
+        self.click(*self.loc32)
 
     # 获取登录对话中马上登录按钮文本信息
     def get_login_text(self):
@@ -239,3 +253,50 @@ class ChatRoomPage(BasePage):
     # 首页主播排班中第一个主播昵称
     def homepage_anchor_preview(self):
         return self.get_text(*self.loc31)
+
+    # 发送聊天信息
+    def enter_msg_send(self, text):
+        self.type_chat_msg(text)
+        self.imp_wait(3)
+        self.click_send_btn()
+        texts = self.get_text(*self.loc11)
+        if text in texts:
+            return True
+        else:
+            return False
+
+    # 发送表情
+    def send_emoji(self):
+        self.click(*self.loc33)
+        self.imp_wait(2)
+        self.click(*self.loc34)
+        self.click(*self.loc_click2)
+        texts = self.get_text(*self.loc11)
+        print(texts)
+        if '1f60a' in texts:
+            return True
+        else:
+            return False
+
+    # 主播推荐，关注第一个主播
+    def chat_anchor_list(self):
+        self.run_script()
+        self.imp_wait(3)
+        anchor = self.get_text(*self.loc36)
+        if self.get_text(*self.loc8) == '關註':
+            self.click(*self.loc8)
+            self.imp_wait(3)
+            self.click(*self.loc7)
+            anchors = self.get_text(*self.loc35)
+            if anchor in anchors:
+                return True
+            else:
+                return False
+        elif self.get_text(*self.loc8) == '已關註':
+            self.click(*self.loc7)
+            self.imp_wait(3)
+            anchors = self.get_text(*self.loc35)
+            if anchor in anchors:
+                return True
+            else:
+                return False

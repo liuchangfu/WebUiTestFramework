@@ -1,8 +1,6 @@
 # _*_ coding:utf-8 _*_
 import unittest
 from framework import common
-from selenium import webdriver
-from Base.chatroompage import ChatRoomPage
 import time
 from loguru import logger
 from ddt import ddt, unpack, data

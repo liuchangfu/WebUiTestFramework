@@ -10,10 +10,10 @@ DAYS: 5
 # Cookies配置
 COOKES:
   - NAME1 : KX_LIVE_TK
-    VAULE1: ce85202a9a2446809c13ab7dcaafbc6f
+    VAULE1: 8fb4d480620b4a4ab7bd8e01c187a275
   - NAME2 : KX_LIVE_UUID
     VAULE2 : pc-3497046b-59da-4582-8a6f-1d5e1133526b
-  - DOMAIN : .nn711.com
+  - DOMAIN : .nn722.com
 
 
 # email配置信息

@@ -32,7 +32,7 @@ class BasePage(object):
             element = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located(loc))
             return element
         except NoSuchElementException:
-            logger.info(f'{self}页面未能找到{loc}元素')
+            logger.info(f'元素不存在....')
 
     # 重写switch_to方法
     def switch_to_frame(self, loc):
@@ -48,12 +48,12 @@ class BasePage(object):
 
     # 定义run_script()方法，用于执行js脚本
     def run_script(self, n=1000):
-        js = "var q=document.documentElement.scrollTop=%d" % n
+        js = f"var q=document.documentElement.scrollTop={n}"
         logger.info('正在执行下拉操作(默认为下拉1000个象素).')
         self.driver.execute_script(js)
 
     # 重定义send_keys()方法
-    def send_keys(self, loc, value):
+    def send_keys(self, value, *loc):
         try:
             self.driver.find_element(*loc).clear()
             self.driver.find_element(*loc).send_keys(value)
@@ -102,16 +102,16 @@ class BasePage(object):
             logger.info(f'当前窗口为:{cur_windows}')
             self.driver.switch_to.window(cur_windows)
         except NoSuchWindowException:
-            logger.info('切换窗口失败！！', )
+            logger.info('切换窗口失败！！')
 
     # 获取输入框中的文本值
     def get_text(self, *loc):
         try:
             text = self.driver.find_element(*loc).text
-            logger.info(f'获取的文本值为:{text}')
+            # logger.info(f'获取的文本值为:{text}')
             return text
         except NoSuchElementException:
-            logger.info('页面元素不存在，获取文本信息失败：{}', *loc)
+            logger.info('页面元素不存在，获取文本信息失败.....')
 
     # 增加cookies
     def add_cookies(self):
