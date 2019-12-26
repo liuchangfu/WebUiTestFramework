@@ -52,6 +52,11 @@ class BasePage(object):
         logger.info('正在执行下拉操作(默认为下拉1000个象素).')
         self.driver.execute_script(js)
 
+    # 鼠标滑动到某个位置
+    def run_scrollIntoView(self, target):
+        logger.info('正在执行鼠标滚轮操作.......')
+        self.driver.execute_script("arguments[0].scrollIntoView(); ", target)
+
     # 重定义send_keys()方法
     def send_keys(self, value, *loc):
         try:

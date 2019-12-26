@@ -4,8 +4,6 @@ from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 from loguru import logger
 from framework import common
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 
 
 class ChatRoomPage(BasePage):
@@ -90,6 +88,12 @@ class ChatRoomPage(BasePage):
     loc35 = (By.XPATH, "//div[@class='myfoucs']")
     # 主播列表第一个用户的昵称
     loc36 = (By.XPATH, "//div[@class='chat-anchor-list']//div[1]//div[1]//span[1]")
+    # 在线用户列表
+    loc37 = (By.XPATH, "//div[@class='online']")
+    # 在线用户列表第二页某个用户的关注
+    loc38 = (By.XPATH, "//li[15]//div[1]//div[2]//div[1]")
+    # 在线用户列表第二页某个用户的昵称
+    loc39 = (By.XPATH, "//li[15]//div[1]//div[1]//div[2]//span[1]")
 
     # 输入聊天信息
     def type_chat_msg(self, text):
@@ -300,3 +304,27 @@ class ChatRoomPage(BasePage):
                 return True
             else:
                 return False
+
+    # 在线用户列表
+    def online_user(self, nickname):
+        online_users = self.get_text(*self.loc37)
+        logger.info(online_users)
+        if nickname in online_users:
+            return True
+        else:
+            return False
+
+    # 我的关注列表
+    def check_online_user(self):
+        target = self.find_element(*self.loc38)
+        self.run_scrollIntoView(target)
+        focus_user = self.get_text(*self.loc39)
+        self.click(*self.loc38)
+        self.imp_wait(3)
+        self.click(*self.loc7)
+        self.imp_wait(3)
+        my_focus_users = self.get_text(*self.loc35)
+        if focus_user in my_focus_users:
+            return True
+        else:
+            return False
