@@ -85,6 +85,7 @@ class TestCharRoom(StartEnd):
         except Exception as msg:
             logger.error('代码运行出问题了，报错的信息为：{}', msg)
 
+    @unittest.skip
     def test_chat_room06(self):
         try:
             logger.info('T-已登录,验证我的关注列表')
@@ -95,6 +96,20 @@ class TestCharRoom(StartEnd):
         except AssertionError:
             common.assertion_error('F-login_test_chat_room', 'test_chat_room06', result, True)
             self.page.save_screens(common.saved_screenshot('test_chat_room06'))
+            raise
+        except Exception as msg:
+            logger.error('代码运行出问题了，报错的信息为：{}', msg)
+
+    def test_chat_room07(self):
+        try:
+            logger.info('T-已登录,发言消息置顶显示')
+            result = self.page.chat_top_msg('我是置顶消息')
+            self.page.imp_wait(3)
+            self.assertIn('我是置顶消息', result)
+            logger.success(f'预期结果：{result},实际结果：{"我是置顶消息"}，测试通过！！')
+        except AssertionError:
+            common.assertion_error('F-login_test_chat_room', 'test_chat_room07', result, '我是置顶消息')
+            self.page.save_screens(common.saved_screenshot('test_chat_room07'))
             raise
         except Exception as msg:
             logger.error('代码运行出问题了，报错的信息为：{}', msg)

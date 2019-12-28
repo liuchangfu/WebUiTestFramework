@@ -94,6 +94,8 @@ class ChatRoomPage(BasePage):
     loc38 = (By.XPATH, "//li[15]//div[1]//div[2]//div[1]")
     # 在线用户列表第二页某个用户的昵称
     loc39 = (By.XPATH, "//li[15]//div[1]//div[1]//div[2]//span[1]")
+    # 置顶消息定位器
+    loc40 = (By.XPATH, "//div[@class='chat-top-content-container']")
 
     # 输入聊天信息
     def type_chat_msg(self, text):
@@ -328,3 +330,12 @@ class ChatRoomPage(BasePage):
             return True
         else:
             return False
+
+    # 输入聊天信息置顶显示
+    def chat_top_msg(self, text):
+        self.select_icon()
+        self.type_chat_msg(text)
+        self.click_send_btn()
+        self.imp_wait(3)
+        chat_top_text = self.get_text(*self.loc40)
+        return chat_top_text
