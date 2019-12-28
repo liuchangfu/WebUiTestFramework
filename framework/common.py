@@ -150,7 +150,7 @@ def cleanup_directory(directory):
         delta = (data1 - data2).days
         del_dir = path + '\\' + directory_list[i]
         data = get_yaml_config_file('config.yaml')
-        if delta > data['DAYS']:
+        if delta >= data['DAYS']:
             try:
                 logger.info('正在执行删除操作........')
                 shutil.rmtree(del_dir)

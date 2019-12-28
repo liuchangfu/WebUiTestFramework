@@ -16,10 +16,10 @@ common.cleanup_directory('logs')
 common.cleanup_directory('screenshot')
 
 # 设置报告文件保存路径
-report_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'testReports\\', )
+# report_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'testReports\\', )
 
-# # 获取系统当前时间
-now = datetime.now().strftime('%Y-%m-%d-%H_%M_%S')
+# 获取系统当前时间
+# now = datetime.now().strftime('%Y-%m-%d-%H_%M_%S')
 
 # 测试报告名称
 report_name = common.saved_report('testReports')
