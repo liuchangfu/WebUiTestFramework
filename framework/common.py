@@ -8,42 +8,41 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import shutil
 
-# 以日期创建二级目录，目录名为2019-12-18
+# 以当前日期创建二级目录，目录格式为2019-12-18
 create_directory_date = datetime.now().strftime('%Y-%m-%d')
 # 当前时间
 currentNow = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
 
 
 # 创建目录
-def create_directory(directory):
-    currentDir = os.path.join(os.path.dirname(os.path.dirname(__file__)), directory + '\\')
-    newDir = currentDir + create_directory_date
+def create_directory(directory, sub_directory):
+    currentDir = os.path.join(os.path.dirname(os.path.dirname(__file__)), directory, sub_directory)
     try:
-        if not os.path.exists(newDir):
-            os.makedirs(newDir)
-            logger.info('目录新建成功:{}', newDir)
+        if not os.path.exists(currentDir):
+            os.makedirs(currentDir)
+            logger.info('目录新建成功:{}', currentDir)
     except Exception as msg:
         logger.info('新建目录失败：', msg)
-    return newDir
+    return currentDir
 
 
 # 保存日志文件
 def saved_log(name, directory='logs'):
-    log_path = create_directory(directory) + '\\' + name + '.txt'
+    log_path = create_directory(directory, create_directory_date) + '\\' + name + '.txt'
     logger.info(f'当前运行的测试日志文件保存在:{log_path}', )
     return log_path
 
 
 # 保存截图文件
 def saved_screenshot(name, directory='screenshot'):
-    screenshot_path = create_directory(directory) + '\\' + name + '_' + currentNow + '.png'
+    screenshot_path = create_directory(directory, create_directory_date) + '\\' + name + '_' + currentNow + '.png'
     logger.info(f'当前运行的测试用例错误截图保存在：{screenshot_path}')
     return screenshot_path
 
 
 # 保存测试报告
 def saved_report(directory='testReports'):
-    report_path = create_directory(directory) + '\\' + currentNow + '_testreport' + '.html'
+    report_path = create_directory(directory, create_directory_date) + '\\' + currentNow + '_testreport' + '.html'
     logger.info(f'当前测试报告保存在:{report_path}')
     return report_path
 
@@ -53,8 +52,8 @@ def get_yaml_config_file(config_name, directory='config'):
     path = os.path.join(os.path.dirname(os.path.dirname(__file__)), directory, config_name)
     with open(path, 'r', encoding='utf-8') as f:
         cfg = f.read()
-        config_data = yaml.load(cfg, Loader=yaml.FullLoader)
-    return config_data
+        data = yaml.load(cfg, Loader=yaml.FullLoader)
+    return data
 
 
 # data = get_yaml_config_file('config.yaml')
