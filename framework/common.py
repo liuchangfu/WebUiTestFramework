@@ -15,7 +15,7 @@ currentNow = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
 
 
 # 创建目录
-def create_directory(directory, sub_directory):
+def create_directory(directory, sub_directory=create_directory_date):
     currentDir = os.path.join(os.path.dirname(os.path.dirname(__file__)), directory, sub_directory)
     try:
         if not os.path.exists(currentDir):
@@ -28,21 +28,21 @@ def create_directory(directory, sub_directory):
 
 # 保存日志文件
 def saved_log(name, directory='logs'):
-    log_path = create_directory(directory, create_directory_date) + '\\' + name + '.txt'
+    log_path = create_directory(directory) + '\\' + name + '.txt'
     logger.info(f'当前运行的测试日志文件保存在:{log_path}', )
     return log_path
 
 
 # 保存截图文件
 def saved_screenshot(name, directory='screenshot'):
-    screenshot_path = create_directory(directory, create_directory_date) + '\\' + name + '_' + currentNow + '.png'
+    screenshot_path = create_directory(directory) + '\\' + name + '_' + currentNow + '.png'
     logger.info(f'当前运行的测试用例错误截图保存在：{screenshot_path}')
     return screenshot_path
 
 
 # 保存测试报告
 def saved_report(directory='testReports'):
-    report_path = create_directory(directory, create_directory_date) + '\\' + currentNow + '_testreport' + '.html'
+    report_path = create_directory(directory) + '\\' + currentNow + '_testreport' + '.html'
     logger.info(f'当前测试报告保存在:{report_path}')
     return report_path
 
