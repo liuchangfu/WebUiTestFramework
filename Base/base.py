@@ -32,7 +32,7 @@ class BasePage(object):
             element = WebDriverWait(self.driver, 5).until(EC.presence_of_element_located(loc))
             return element
         except NoSuchElementException:
-            logger.info(f'元素不存在....')
+            logger.error(f'元素不存在....')
 
     # 重写switch_to方法
     def switch_to_frame(self, loc):
@@ -63,14 +63,14 @@ class BasePage(object):
             self.driver.find_element(*loc).clear()
             self.driver.find_element(*loc).send_keys(value)
         except Exception:
-            logger.info(f'输入{value}失败!!!')
+            logger.error(f'输入{value}失败!!!')
 
     # 重定义click()方法
     def click(self, *loc):
         try:
             self.driver.find_element(*loc).click()
         except NoSuchElementException:
-            logger.info('页面元素不存在：{}', *loc)
+            logger.error('页面元素不存在：{}', *loc)
 
     # 显式等待,time的单位为秒
     def imp_wait(self, time):
@@ -85,7 +85,7 @@ class BasePage(object):
         try:
             WebDriverWait(self.driver, 5).until(EC.title_contains(title))
         except Exception as msg:
-            logger.info(f'未获取到网页标题:{msg}')
+            logger.error(f'未获取到网页标题:{msg}')
 
     # 获取网页源代码
     def get_page_source(self):
@@ -96,7 +96,7 @@ class BasePage(object):
         try:
             return self.driver.save_screenshot(directory)
         except Exception as msg:
-            logger.info(f'截图失败:{msg}')
+            logger.error(f'截图失败:{msg}')
 
     # 切换到当前窗口
     def switch_to_window(self):
@@ -107,16 +107,16 @@ class BasePage(object):
             logger.info(f'当前窗口为:{cur_windows}')
             self.driver.switch_to.window(cur_windows)
         except NoSuchWindowException:
-            logger.info('切换窗口失败！！')
+            logger.error('切换窗口失败！！')
 
     # 获取输入框中的文本值
     def get_text(self, *loc):
         try:
             text = self.driver.find_element(*loc).text
-            # logger.info(f'获取的文本值为:{text}')
+            logger.info(f'获取的文本值为:{text}')
             return text
         except NoSuchElementException:
-            logger.info('页面元素不存在，获取文本信息失败.....')
+            logger.error('页面元素不存在，获取文本信息失败.....')
 
     # 增加cookies
     def add_cookies(self):

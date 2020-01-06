@@ -96,6 +96,10 @@ class ChatRoomPage(BasePage):
     loc39 = (By.XPATH, "//li[15]//div[1]//div[1]//div[2]//span[1]")
     # 置顶消息定位器
     loc40 = (By.XPATH, "//div[@class='chat-top-content-container']")
+    # 在线用户表头定位器
+    loc41 = (By.XPATH, "//div[@class='room-right-bottom-info']//li[2]")
+    # 我的关注表头定位器
+    loc42 = (By.XPATH, "//div[@class='room-right-bottom-info']//li[2]")
 
     # 输入聊天信息
     def type_chat_msg(self, text):
@@ -125,11 +129,11 @@ class ChatRoomPage(BasePage):
     def click_send_btn_is_displayed(self):
         try:
             self.click(*self.loc_click2)
-            self.imp_wait(3)
             toast = self.find_element(*self.loc_text2).is_displayed()
+            self.imp_wait(3)
             return toast
         except NoSuchElementException:
-            logger.info('没有找到该元素.....')
+            logger.error('没有找到该元素.....')
             return False
 
     # 点击聊天信息输入框中的登录链接，获取登录框中的马上登录按钮文本信息
@@ -155,6 +159,7 @@ class ChatRoomPage(BasePage):
         value = self.find_element(*self.loc13).get_attribute('class')
         return value
 
+    # 点击头象
     def click_avatar(self):
         try:
             self.click(*self.loc14)
@@ -309,8 +314,9 @@ class ChatRoomPage(BasePage):
 
     # 在线用户列表
     def online_user(self, nickname):
+        self.click(*self.loc41)
+        self.imp_wait(3)
         online_users = self.get_text(*self.loc37)
-        logger.info(online_users)
         if nickname in online_users:
             return True
         else:
@@ -337,5 +343,6 @@ class ChatRoomPage(BasePage):
         self.type_chat_msg(text)
         self.click_send_btn()
         self.imp_wait(3)
-        chat_top_text = self.get_text(*self.loc40)
+        # chat_top_text = self.get_text(*self.loc40)
+        chat_top_text = self.find_element(*self.loc40).is_displayed()
         return chat_top_text

@@ -15,7 +15,7 @@ class StartEnd(unittest.TestCase):
                    rotation='10 MB',
                    encoding='utf-8')
         logger.info('==========setUp==========')
-        cls.data = common.get_yaml_config_file('config.yamdl')
+        cls.data = common.get_yaml_config_file('config.yaml')
         cls.url = cls.data['URL'] + 'room/xyft?roomId=xyft'
         logger.info(f'当前打开的网址为：{cls.url}"')
         cls.driver = webdriver.Chrome()

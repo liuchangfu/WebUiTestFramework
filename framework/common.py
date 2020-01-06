@@ -56,9 +56,6 @@ def get_yaml_config_file(config_name, directory='config'):
     return data
 
 
-# data = get_yaml_config_file('config.yaml')
-# print(data['URL1'])
-
 # 获取配置文件中的邮箱主机，邮箱用户名和邮箱密码
 def get_mail_info():
     data = get_yaml_config_file('config.yaml')

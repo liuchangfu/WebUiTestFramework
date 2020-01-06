@@ -10,15 +10,20 @@ DAYS: 5
 # Cookies配置
 COOKES:
   - NAME1 : KX_LIVE_TK
-    VAULE1: 8fb4d480620b4a4ab7bd8e01c187a275
+    VAULE1: d38d7dfff59543f1898087bf8a50c26a
   - NAME2 : KX_LIVE_UUID
     VAULE2 : pc-3497046b-59da-4582-8a6f-1d5e1133526b
   - DOMAIN : .nn722.com
 
 
 # email配置信息
+#EMAIL:
+#  - EMAIL_HOST: smtp.qq.com
+#  - EMAIL_USER: 172667104@qq.com
+#  - EMAIL_PASSWORD: cigdgjujnyxmbhgd
+
 EMAIL:
-  - EMAIL_HOST: smtp.qq.com
-  - EMAIL_USER: 172667104@qq.com
-  - EMAIL_PASSWORD: cigdgjujnyxmbhgd
+  - EMAIL_HOST: 192.168.10.3
+  - EMAIL_USER: liucf@cm.mail
+  - EMAIL_PASSWORD: lcfwku
 
