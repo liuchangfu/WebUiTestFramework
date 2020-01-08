@@ -113,7 +113,7 @@ class BasePage(object):
     def get_text(self, *loc):
         try:
             text = self.driver.find_element(*loc).text
-            logger.info(f'获取的文本值为:{text}')
+            # logger.info(f'获取的文本值为:{text}')
             return text
         except NoSuchElementException:
             logger.error('页面元素不存在，获取文本信息失败.....')
@@ -145,5 +145,6 @@ class BasePage(object):
     def headless(self):
         chrome_options = Options()
         chrome_options.add_argument('--headless')
-        self.driver = webdriver.Chrome(chrome_options=chrome_options)
+        # self.driver = webdriver.Chrome(chrome_options=chrome_options)
+        self.driver = webdriver.Chrome(options=chrome_options)
         return self.driver

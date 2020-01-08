@@ -38,7 +38,8 @@ class ChatRoomPage(BasePage):
     # 聊天信息显示区域定位器
     loc11 = (By.XPATH, "//div[@class='chat-content-container']")
     # 夜间模式定位器
-    loc12 = (By.XPATH, "//div[@class='chat-editor-container']//span[2]")
+    loc12 = (By.XPATH,
+             "//body[@class='chat']/div[@id='app']/div/div[@class='kxlive-room-container']/div[@class='room-container']/div[@class='room-center no-anchor']/div[@class='chat-container']/div[@class='chat-editor-container']/div[@class='say-bar']/div[@class='say-bar-left']/span[2]")
     # 夜间模式类名定位
     loc13 = (By.XPATH, "//body[@class='chat night-skin']")
     # 聊天信息区，用户头像定位
@@ -46,7 +47,7 @@ class ChatRoomPage(BasePage):
     # 聊天信息区,弹出提示信息的定位器
     loc15 = (By.XPATH, "//div[@class='toastB']")
     # 实时竞猜第一个用户定位器
-    loc16 = (By.XPATH, '//tr[1]//td[1]//span[1]')
+    loc16 = (By.XPATH, "//div[@class='room-right']//tr[1]//td[1]")
     # 竞猜主页-》最新竞猜第一个用户定位器
     loc17 = (By.XPATH, '//tr[1]//td[1]//div[1]')
     # 竞猜排行定位器
@@ -129,8 +130,8 @@ class ChatRoomPage(BasePage):
     def click_send_btn_is_displayed(self):
         try:
             self.click(*self.loc_click2)
-            toast = self.find_element(*self.loc_text2).is_displayed()
             self.imp_wait(3)
+            toast = self.find_element(*self.loc_text2).is_displayed()
             return toast
         except NoSuchElementException:
             logger.error('没有找到该元素.....')
@@ -157,6 +158,7 @@ class ChatRoomPage(BasePage):
         self.click(*self.loc12)
         self.imp_wait(3)
         value = self.find_element(*self.loc13).get_attribute('class')
+        logger.info(f'调试-{value}')
         return value
 
     # 点击头象
@@ -230,7 +232,7 @@ class ChatRoomPage(BasePage):
         text1 = self.get_text(*self.loc21)
         text2 = self.get_text(*self.loc22)
         text3 = self.get_text(*self.loc23)
-        self.driver.quit()
+        # self.driver.quit()
         return text1, text2, text3
 
     # 获取竞猜排行-赢率榜第一个用户的昵称
@@ -268,8 +270,8 @@ class ChatRoomPage(BasePage):
     # 发送聊天信息
     def enter_msg_send(self, text):
         self.type_chat_msg(text)
-        self.imp_wait(3)
         self.click_send_btn()
+        self.imp_wait(3)
         texts = self.get_text(*self.loc11)
         if text in texts:
             return True
@@ -298,6 +300,7 @@ class ChatRoomPage(BasePage):
             self.click(*self.loc8)
             self.imp_wait(3)
             self.click(*self.loc7)
+            self.imp_wait(3)
             anchors = self.get_text(*self.loc35)
             if anchor in anchors:
                 return True
@@ -305,7 +308,7 @@ class ChatRoomPage(BasePage):
                 return False
         elif self.get_text(*self.loc8) == '已關註':
             self.click(*self.loc7)
-            self.imp_wait(3)
+            self.imp_wait(5)
             anchors = self.get_text(*self.loc35)
             if anchor in anchors:
                 return True
@@ -326,6 +329,7 @@ class ChatRoomPage(BasePage):
     def check_online_user(self):
         target = self.find_element(*self.loc38)
         self.run_scrollIntoView(target)
+        self.imp_wait(3)
         focus_user = self.get_text(*self.loc39)
         self.click(*self.loc38)
         self.imp_wait(3)
@@ -339,10 +343,12 @@ class ChatRoomPage(BasePage):
 
     # 输入聊天信息置顶显示
     def chat_top_msg(self, text):
+        # self.imp_wait(5)
+        # self.run_script(-1000)
         self.select_icon()
         self.type_chat_msg(text)
         self.click_send_btn()
         self.imp_wait(3)
-        # chat_top_text = self.get_text(*self.loc40)
-        chat_top_text = self.find_element(*self.loc40).is_displayed()
+        chat_top_text = self.get_text(*self.loc40)
+        # chat_top_text = self.find_element(*self.loc40).is_displayed()
         return chat_top_text

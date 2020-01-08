@@ -4,7 +4,7 @@ from Base.baidupage import BaiDuSearch
 from ddt import ddt, unpack, data
 import time
 from loguru import logger
-from framework.myunit1 import StartEnd
+from framework.myunit_baidu import StartEnd
 import unittest
 
 
