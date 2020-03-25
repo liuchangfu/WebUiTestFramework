@@ -21,6 +21,5 @@ class BaiDuSearch(BasePage):
         self.driver.find_element(*self.type_btn).click()
 
     def baidu_search_action(self, keyword):
-        self.open()
         self.type_search(keyword)
         self.btn_search()

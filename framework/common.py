@@ -8,7 +8,7 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import shutil
 
-# 以当前日期创建二级目录，目录格式为2019-12-18
+# 以当前日期创建二级目录，目录格式为2020-03-25
 create_directory_date = datetime.now().strftime('%Y-%m-%d')
 # 当前时间
 currentNow = datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
@@ -21,7 +21,7 @@ def create_directory(directory, sub_directory=create_directory_date):
         if not os.path.exists(currentDir):
             os.makedirs(currentDir)
             logger.info('目录新建成功:{}', currentDir)
-    except Exception as msg:
+    except OSError as msg:
         logger.info('新建目录失败：', msg)
     return currentDir
 
