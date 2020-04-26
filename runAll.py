@@ -10,7 +10,8 @@ from framework import common
 
 sys.path.append("../")
 
-logger.info(f'正在检查testReports,logs和screenshot文件夹下，是否有超过创建时间超过{common.get_yaml_config_file("config.yaml")["DAYS"]}天的目录.....')
+logger.info(
+    f'正在检查testReports,logs和screenshot文件夹下，是否有超过创建时间超过{common.get_yaml_config_file("config.yaml")["DAYS"]}天的目录.....')
 common.cleanup_directory('testReports')
 common.cleanup_directory('logs')
 common.cleanup_directory('screenshot')
@@ -24,9 +25,12 @@ common.cleanup_directory('screenshot')
 # 测试报告名称
 report_name = common.saved_report('testReports')
 
+# 测试用例所有目录
+test_case_dir = os.path.join(os.path.dirname(__file__), 'testCase')
+logger.info(f'测试报告所在目录为：{test_case_dir}')
 # 加载testCase文件中测试用例
-suite = unittest.TestLoader().discover("testCase")
-# suite = unittest.defaultTestLoader.discover(test_case_dir, pattern='ex_testbaidusearch.py')
+# suite = unittest.TestLoader().discover(test_case_dir)
+suite = unittest.defaultTestLoader.discover(test_case_dir, pattern='test_baidu_serach.py')
 
 
 if __name__ == '__main__':

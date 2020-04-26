@@ -114,7 +114,8 @@ def take_messages():
 def send_mail():
     try:
         # 发送给一个人，也可以发送多个人
-        recipients = ['shift_1220@163.com']
+        # recipients = ['shift_1220@163.com']
+        recipients = ['lidl@cm.mail']
         msg = take_messages()
         # 发送邮件的人
         msg['from'] = get_mail_info()[1]

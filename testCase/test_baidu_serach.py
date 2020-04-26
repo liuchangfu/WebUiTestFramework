@@ -18,7 +18,7 @@ class TestSerach(StartEnd):
         logger.info(f'正在输入查询关键词:{text}')
         page.baidu_search_action(text)
         time.sleep(3)
-        logger.info(f'当前标题为：{self.page.get_title()}')
+        logger.info(f'当前标题为：{page.get_title()}')
         # assert text in baidu_page.get_title()
         assert text + '_百度搜索' == expected_text
 
