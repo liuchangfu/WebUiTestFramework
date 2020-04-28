@@ -2,13 +2,14 @@
 from datetime import datetime
 import os
 from loguru import logger
+from framework.common import create_directory
 
 # 项目根目录
 ROOT_DIR = os.path.dirname(os.path.dirname(__file__))
 logger.info(f'1----{ROOT_DIR}')
 
 # 报告目录
-REPORT_DIR = os.path.join(ROOT_DIR, 'report')
+REPORT_DIR = os.path.join(ROOT_DIR, 'testReports')
 logger.info(f'2----{REPORT_DIR}')
 
 # 配置文件目录
@@ -55,7 +56,6 @@ logger.info(f'6-----{HTML_NAME}')
 
 
 # 登录Cookies配置
-
 
 Cookies = [
     {

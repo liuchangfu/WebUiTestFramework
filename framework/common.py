@@ -29,7 +29,7 @@ def create_directory(directory, sub_directory=create_directory_date):
 # 保存日志文件
 def saved_log(name, directory='logs'):
     log_path = create_directory(directory) + '\\' + name + '.txt'
-    logger.info(f'当前运行的测试日志文件保存在:{log_path}', )
+    logger.info(f'当前运行的测试日志文件保存在:{log_path}')
     return log_path
 
 
