@@ -2,31 +2,29 @@
 from datetime import datetime
 import os
 from loguru import logger
-from framework.common import create_directory
+import pathlib
 
 # 项目根目录
-ROOT_DIR = os.path.dirname(os.path.dirname(__file__))
-logger.info(f'1----{ROOT_DIR}')
+# ROOT_DIR = os.path.dirname(os.path.dirname(__file__))
+ROOT_DIR = pathlib.Path.cwd().parent
 
 # 报告目录
-REPORT_DIR = os.path.join(ROOT_DIR, 'testReports')
-logger.info(f'2----{REPORT_DIR}')
+# REPORT_DIR = os.path.join(ROOT_DIR, 'Reports')
+REPORT_DIR = ROOT_DIR.joinpath('Reports')
 
 # 配置文件目录
-CONF_PATH = os.path.join(ROOT_DIR, 'config')
-logger.info(f'3----{CONF_PATH}')
+# CONF_PATH = os.path.join(ROOT_DIR, 'config')
+CONF_PATH = ROOT_DIR.joinpath('config')
 
 # 测试数据所在目录
-DATA_Path = os.path.join(ROOT_DIR, 'data')
-logger.info(f'4----{DATA_Path}')
+# DATA_Path = os.path.join(ROOT_DIR, 'data')
+DATA_PATH = ROOT_DIR.joinpath('data')
 
 # 当前日期
 CURRENT_DATE = datetime.now().strftime('%Y-%m-%d')
-logger.info(f'4----{CURRENT_DATE}')
 
 # 当前时间
 CURRENT_TIME = datetime.now().strftime('%H_%M_%S')
-logger.info(f'5-----{CURRENT_TIME}')
 
 # 邮件配置信息
 # 邮件服务器
@@ -43,8 +41,7 @@ SUBJECT = '凯旋项目自动化测试报告'
 CONTENTS = '测试报告正文'
 # 报告名称
 # HTML_NAME = 'testReport{}.html'.format(CURRENT_TIME)
-HTML_NAME = f'{CURRENT_DATE}_{CURRENT_TIME}_testReport.html'
-logger.info(f'6-----{HTML_NAME}')
+HTML_NAME = f'{CURRENT_DATE}_{CURRENT_TIME}_testcase_report.html'
 
 # # Cookies配置
 # COOKES:
@@ -69,8 +66,8 @@ Cookies = [
     {'DOMAIN': '.nn722.com'}
 ]
 
-logger.info(type(Cookies))
-logger.info(Cookies[0]['NAME1'])
-logger.info(Cookies[0]['VAULE1'])
-logger.info(Cookies[1])
-logger.info(Cookies[2])
+# logger.info(type(Cookies))
+# logger.info(Cookies[0]['NAME1'])
+# logger.info(Cookies[0]['VAULE1'])
+# logger.info(Cookies[1])
+# logger.info(Cookies[2])

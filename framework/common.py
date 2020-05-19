@@ -7,6 +7,7 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 import shutil
+from config.conf import ROOT_DIR, REPORT_DIR
 
 # 以当前日期创建二级目录，目录格式为2020-03-25
 create_directory_date = datetime.now().strftime('%Y-%m-%d')
@@ -41,7 +42,7 @@ def saved_screenshot(name, directory='screenshot'):
 
 
 # 保存测试报告
-def saved_report(directory='testReports'):
+def saved_report(directory='Reports'):
     report_path = create_directory(directory) + '\\' + currentNow + '_testreport' + '.html'
     logger.info(f'当前测试报告保存在:{report_path}')
     return report_path
@@ -67,14 +68,14 @@ def get_mail_info():
 
 # 该函数的作用是为了在测试报告的路径下找到最新的测试报告
 def get_report():
-    report_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'testReports\\')
+    report_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'Reports\\')
     # 列出指定目录下的所有文件和子目录
     dirs = os.listdir(report_path)
     # 把dirs目录下的文件按照创建时间的升序排序
     dirs.sort()
     new_dir = dirs[-1]
     # 获取最新的文件目录
-    report = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'testReports\\', new_dir + '\\')
+    report = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'Reports\\', new_dir + '\\')
     # 获取最新目录中的最新创建的文件
     new_dir = os.listdir(report)
     new_dir.sort()
@@ -131,7 +132,7 @@ def send_mail():
         logger.error('邮件发送失败，请检查邮件发送配置信息！！')
 
 
-# 清理logs,testReports,screenshot超过5天目录
+# 清理logs,Reports,screenshot超过5天目录
 def cleanup_directory(directory):
     path = os.path.join(os.path.dirname(os.path.dirname(__file__)), directory)
     directory_list = os.listdir(path)

@@ -2,6 +2,8 @@
 import time
 import pytest
 from loguru import logger
+
+
 # from framework.myunit_baidu_pytest import StartEnd
 # from Base.baidupage import BaiDuSearch
 
@@ -23,19 +25,21 @@ from loguru import logger
 #         assert text + '_百度搜索' == expected_text
 
 
-class TestSerach():
+class Test_Serach:
     @pytest.mark.parametrize('text,expected_text',
                              [('selenium', 'selenium_百度搜索'),
                               ('java', 'java_百度搜索'),
-                              ('php', 'php1_百度搜索')])
-    def test_serach(self, open_url, text, expected_text):
+                              ('php1', 'php_百度搜索')])
+    @pytest.mark.parametrize('create_log', ['baidu_test_serach'], indirect=True)
+    def test_serach(self, create_log, open_url, text, expected_text):
+        """测试百度搜索功能"""
         baidu_page = open_url
         baidu_page.baidu_search_action(text)
         logger.info(f'正在输入查询关键词:{text}')
         time.sleep(3)
         logger.info(f'当前标题为：{baidu_page.get_title()}')
         # assert text in baidu_page.get_title()
-        assert text + '_百度搜索' == expected_text
+        assert text + '_百度搜索' == expected_text, '断言失败！！'
 
 
 if __name__ == '__main__':

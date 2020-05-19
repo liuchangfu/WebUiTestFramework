@@ -12,18 +12,18 @@ sys.path.append("../")
 
 logger.info(
     f'正在检查testReports,logs和screenshot文件夹下，是否有超过创建时间超过{common.get_yaml_config_file("config.yaml")["DAYS"]}天的目录.....')
-common.cleanup_directory('testReports')
+common.cleanup_directory('Reports')
 common.cleanup_directory('logs')
 common.cleanup_directory('screenshot')
 
 # 设置报告文件保存路径
-# report_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'testReports\\', )
+# report_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'Reports\\', )
 
 # 获取系统当前时间
 # now = datetime.now().strftime('%Y-%m-%d-%H_%M_%S')
 
 # 测试报告名称
-report_name = common.saved_report('testReports')
+report_name = common.saved_report('Reports')
 
 # 测试用例所有目录
 test_case_dir = os.path.join(os.path.dirname(__file__), 'testCase')

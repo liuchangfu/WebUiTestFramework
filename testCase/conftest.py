@@ -4,6 +4,17 @@
 
 import pytest
 from Base.baidupage import BaiDuSearchPage
+from framework.common import saved_log
+from loguru import logger
+
+
+@pytest.fixture(scope='module')
+def create_log(request):
+    log_name = request.param
+    logger.info(f'{log_name}')
+    logger.add(saved_log(log_name), format="{time:YYYY-MM-DD----HH:mm:ss}--{level}--{message}",
+               rotation='10 MB',
+               encoding='utf-8')
 
 
 @pytest.fixture(scope='class')

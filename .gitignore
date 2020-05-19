@@ -129,5 +129,5 @@ logs/*.txt
 testReports/*.html
 logs/
 screenshot/
-testReports/
+Reports/
 test_script.py

@@ -10,7 +10,7 @@ def main():
     if ROOT_DIR not in sys.path:
         sys.path.append(ROOT_DIR)
     # 执行用例
-    args = ['--reruns', '1', '--html=' + './testReports/' + HTML_NAME]
+    args = ['--reruns', '1', '--html=' + './Reports/' + HTML_NAME]
     pytest.main(args)
 
 

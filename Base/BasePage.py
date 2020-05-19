@@ -153,11 +153,11 @@ class BasePage:
             element = self.find_element(by, locator)
             element.send_keys(value)
         except AttributeError as e:
-            print(e)
+            logger.info(e)
 
     def clear(self, by, locator):
         """清理数据"""
-        print('info:clearing value')
+        logger.info('info:clearing value')
         try:
             element = self.find_element(by, locator)
             element.clear()
@@ -197,7 +197,7 @@ class BasePage:
         self.driver.execute_script(js)
 
     # 鼠标滑动到某个位置
-    def run_scroll_intoview(self, target):
+    def run_scroll_into_view(self, target):
         logger.info('正在执行鼠标滚轮操作.......')
         self.driver.execute_script("arguments[0].scrollIntoView(); ", target)
 
