@@ -25,15 +25,16 @@ from loguru import logger
 #         assert text + '_百度搜索' == expected_text
 
 
-class Test_Serach:
+class TestSerach:
     @pytest.mark.parametrize('text,expected_text',
                              [('selenium', 'selenium_百度搜索'),
                               ('java', 'java_百度搜索'),
-                              ('php1', 'php_百度搜索')])
+                              ('php', 'php_百度搜索'),
+                              ])
     @pytest.mark.parametrize('create_log', ['baidu_test_serach'], indirect=True)
-    def test_serach(self, create_log, open_url, text, expected_text):
+    def test_serach(self, create_log, init_pages, text, expected_text):
         """测试百度搜索功能"""
-        baidu_page = open_url
+        baidu_page = init_pages[1]
         baidu_page.baidu_search_action(text)
         logger.info(f'正在输入查询关键词:{text}')
         time.sleep(3)
@@ -43,4 +44,4 @@ class Test_Serach:
 
 
 if __name__ == '__main__':
-    pytest.main()
+    pytest.main(['-v', 'test_baidu_serach.py'])

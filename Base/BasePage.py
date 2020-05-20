@@ -7,15 +7,16 @@ from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import (
     TimeoutException,
-    NoAlertPresentException,
+    NoAlertPresentException, NoSuchWindowException,
 )
 from loguru import logger
+from selenium import webdriver
 
 
 class BasePage:
     """结合显示等待封装一些selenium内置方法"""
 
-    def __init__(self, diver, timeout=30):
+    def __init__(self, diver, timeout=10):
         self.byDic = {
             'id': By.ID,
             'name': By.NAME,
@@ -24,6 +25,7 @@ class BasePage:
             'link_text': By.LINK_TEXT
         }
         self.driver = diver
+        self.driver1 = webdriver.Chrome()
         self.timeout = timeout
 
     def find_element(self, by, locator):
@@ -37,7 +39,7 @@ class BasePage:
             logger.info(f'Starting find the element {locator} by {by}!')
             element = WD(self.driver, self.timeout).until(lambda x: x.find_element(by, locator))
         except TimeoutException as t:
-            logger.error(f'error: found {locator} timeout!:{t}')
+            logger.warning(f'error: found {locator} timeout!:{t}')
         else:
             return element
 
@@ -52,7 +54,7 @@ class BasePage:
             logger.info(f'start find the elements {locator} by {by}')
             elements = WD(self.driver, self.timeout).until(lambda x: x.find_elements(by, locator))
         except TimeoutException as t:
-            logger.error(f'error: found "{locator}" timeout!:{t}')
+            logger.warning(f'error: found "{locator}" timeout!:{t}')
         else:
             return elements
 
@@ -68,7 +70,7 @@ class BasePage:
                 WD(self.driver, self.timeout). \
                     until(ec.visibility_of_element_located((self.byDic[by], locator)))
             except TimeoutException:
-                logger.error(f'Error: element {locator} not exist')
+                logger.warning(f'Error: element {locator} not exist')
                 return False
             return True
         else:
@@ -80,7 +82,7 @@ class BasePage:
                 element = WD(self.driver, self.timeout). \
                     until(ec.element_to_be_clickable((self.byDic[by], locator)))
             except TimeoutException:
-                logger.error("元素不可以点击")
+                logger.warning("元素不可以点击")
             else:
                 return element
         else:
@@ -94,7 +96,7 @@ class BasePage:
         try:
             re = WD(self.driver, self.timeout).until(ec.alert_is_present())
         except (TimeoutException, NoAlertPresentException):
-            logger.error("error:no found alert")
+            logger.warning("error:no found alert")
         else:
             return re
 
@@ -106,7 +108,7 @@ class BasePage:
                 WD(self.driver, self.timeout). \
                     until(ec.frame_to_be_available_and_switch_to_it((self.byDic[by], locator)))
             except TimeoutException as t:
-                logger.error(f'error: found {locator} timeout！切换frame失败!:{t}')
+                logger.warning(f'error: found {locator} timeout！切换frame失败!:{t}')
         else:
             logger.error(f'the {by} error!')
 
@@ -135,7 +137,7 @@ class BasePage:
             else:
                 return element.text
         except AttributeError:
-            logger.error(f'get {locator} text failed return None')
+            logger.warning(f'get {locator} text failed return None')
 
     def load_url(self, url):
         """加载url"""
@@ -171,12 +173,12 @@ class BasePage:
         if element:
             element.click()
         else:
-            logger.error(f'the {locator} unclickable!')
+            logger.error(f'the {locator} un_clickable!')
 
     @staticmethod
     def sleep(num=0):
         """强制等待"""
-        logger.info(f'sleep {num} minutes')
+        logger.info(f'sleep {num} seconds')
         time.sleep(num)
 
     def wait_element_to_be_located(self, by, locator):
@@ -185,10 +187,7 @@ class BasePage:
         try:
             return WD(self.driver, self.timeout).until(ec.presence_of_element_located((self.byDic[by], locator)))
         except TimeoutException as t:
-            logger.error(f'found {locator} timeout！:{t}')
-
-    def get_page_source(self):
-        return self.get_source()
+            logger.warning(f'found {locator} timeout！:{t}')
 
     # 定义run_script()方法，用于执行js脚本
     def run_script(self, n=1000):
@@ -211,6 +210,21 @@ class BasePage:
     # 获取当前页面title
     def get_title(self):
         return self.driver.title
+
+    # 切换到当前窗口
+    def switch_to_window(self):
+        try:
+            windows = self.driver.window_handles
+            # logger.info(f'浏览器打开所有的窗口:{windows}')
+            cur_windows = windows[-1]
+            logger.info(f'当前窗口为:{cur_windows}')
+            self.driver.switch_to.window(cur_windows)
+        except NoSuchWindowException:
+            logger.error('切换窗口失败！！')
+
+    # 关闭当前窗口
+    def close_curr_windows(self):
+        self.driver.close()
 
 
 if __name__ == '__main__':

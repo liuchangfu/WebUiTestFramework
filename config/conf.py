@@ -4,6 +4,9 @@ import os
 from loguru import logger
 import pathlib
 
+# 网站地址
+URL = 'https://live.kk1350.com/'
+
 # 项目根目录
 # ROOT_DIR = os.path.dirname(os.path.dirname(__file__))
 ROOT_DIR = pathlib.Path.cwd().parent

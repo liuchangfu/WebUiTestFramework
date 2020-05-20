@@ -26,7 +26,7 @@ common.cleanup_directory('screenshot')
 report_name = common.saved_report('Reports')
 
 # 测试用例所有目录
-test_case_dir = os.path.join(os.path.dirname(__file__), 'testCase')
+test_case_dir = os.path.join(os.path.dirname(__file__), 'TestCases')
 logger.info(f'测试报告所在目录为：{test_case_dir}')
 # 加载testCase文件中测试用例
 # suite = unittest.TestLoader().discover(test_case_dir)

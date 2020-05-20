@@ -4,6 +4,7 @@
 
 import pytest
 from Base.baidupage import BaiDuSearchPage
+from Base.PageObject.HomePage import HomePage
 from framework.common import saved_log
 from loguru import logger
 
@@ -11,7 +12,6 @@ from loguru import logger
 @pytest.fixture(scope='module')
 def create_log(request):
     log_name = request.param
-    logger.info(f'{log_name}')
     logger.add(saved_log(log_name), format="{time:YYYY-MM-DD----HH:mm:ss}--{level}--{message}",
                rotation='10 MB',
                encoding='utf-8')
@@ -20,11 +20,13 @@ def create_log(request):
 @pytest.fixture(scope='class')
 def init_pages(driver):
     baidu_page = BaiDuSearchPage(driver)
-    yield driver, baidu_page
+    home_page = HomePage(driver)
+    yield driver, baidu_page, home_page
 
 
 @pytest.fixture(scope='function')
 def open_url(init_pages):
     driver = init_pages[0]
     baidu_page = init_pages[1]
+    # home_page = init_pages[2]
     yield baidu_page
