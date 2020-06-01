@@ -7,10 +7,11 @@ from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import (
     TimeoutException,
-    NoAlertPresentException, NoSuchWindowException,
+    NoAlertPresentException, NoSuchWindowException, NoSuchElementException
 )
 from loguru import logger
 from selenium import webdriver
+from selenium.webdriver.common.action_chains import ActionChains
 
 
 class BasePage:
@@ -38,8 +39,8 @@ class BasePage:
         try:
             logger.info(f'Starting find the element {locator} by {by}!')
             element = WD(self.driver, self.timeout).until(lambda x: x.find_element(by, locator))
-        except TimeoutException as t:
-            logger.warning(f'error: found {locator} timeout!:{t}')
+        except TimeoutException:
+            logger.warning(f'error: found {locator} timeout!')
         else:
             return element
 
@@ -51,7 +52,7 @@ class BasePage:
         :return: elements object
         """
         try:
-            logger.info(f'start find the elements {locator} by {by}')
+            # logger.info(f'start find the elements {locator} by {by}')
             elements = WD(self.driver, self.timeout).until(lambda x: x.find_elements(by, locator))
         except TimeoutException as t:
             logger.warning(f'error: found "{locator}" timeout!:{t}')
@@ -102,7 +103,7 @@ class BasePage:
 
     def switch_to_frame(self, by, locator):
         """判断frame是否存在，存在就跳到frame"""
-        logger.info(f'info:switching to iframe "{locator}"')
+        # logger.info(f'info:switching to iframe "{locator}"')
         if by.lower() in self.byDic:
             try:
                 WD(self.driver, self.timeout). \
@@ -150,7 +151,7 @@ class BasePage:
 
     def send_keys(self, by, locator, value=''):
         """写数据"""
-        logger.info(f'info:input {value}')
+        logger.info(f'info:input---{value}')
         try:
             element = self.find_element(by, locator)
             element.send_keys(value)
@@ -168,7 +169,7 @@ class BasePage:
 
     def click(self, by, locator):
         """点击某个元素"""
-        logger.info(f'click {locator}')
+        # logger.info(f'click {locator}')
         element = self.is_click(by, locator)
         if element:
             element.click()
@@ -183,29 +184,26 @@ class BasePage:
 
     def wait_element_to_be_located(self, by, locator):
         """显示等待某个元素出现，且可见"""
-        logger.info(f'waiting {locator} to be located')
+        # logger.info(f'waiting {locator} to be located')
         try:
             return WD(self.driver, self.timeout).until(ec.presence_of_element_located((self.byDic[by], locator)))
         except TimeoutException as t:
             logger.warning(f'found {locator} timeout！:{t}')
 
-    # 定义run_script()方法，用于执行js脚本
+    # js脚本下拉浏览器
     def run_script(self, n=1000):
         js = f"var q=document.documentElement.scrollTop={n}"
         logger.info('正在执行下拉操作(默认为下拉1000个象素).')
+        self.driver.execute_script(js)
+
+    # 执行js脚本
+    def run_script_1(self, js):
         self.driver.execute_script(js)
 
     # 鼠标滑动到某个位置
     def run_scroll_into_view(self, target):
         logger.info('正在执行鼠标滚轮操作.......')
         self.driver.execute_script("arguments[0].scrollIntoView(); ", target)
-
-    # 截图方法
-    def save_screens(self, directory):
-        try:
-            return self.driver.save_screenshot(directory)
-        except Exception as msg:
-            logger.error(f'截图失败:{msg}')
 
     # 获取当前页面title
     def get_title(self):
@@ -225,6 +223,14 @@ class BasePage:
     # 关闭当前窗口
     def close_curr_windows(self):
         self.driver.close()
+
+    # 鼠标悬浮操作
+    def action_chains(self, by, locator):
+        try:
+            mouse = self.find_element(by, locator)
+            ActionChains(self.driver).move_to_element(mouse).perform()
+        except NoSuchElementException:
+            logger.error('未找到元素！！')
 
 
 if __name__ == '__main__':

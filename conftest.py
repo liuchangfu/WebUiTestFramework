@@ -59,7 +59,7 @@ def _capture_screenshot():
     return _driver.get_screenshot_as_base64()
 
 
-@pytest.fixture(scope='module')
+@pytest.fixture(scope='session')
 def driver():
     global _driver
     logger.info('------------open browser------------')

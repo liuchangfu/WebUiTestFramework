@@ -11,10 +11,9 @@ from framework import common
 sys.path.append("../")
 
 logger.info(
-    f'正在检查testReports,logs和screenshot文件夹下，是否有超过创建时间超过{common.get_yaml_config_file("config.yaml")["DAYS"]}天的目录.....')
-common.cleanup_directory('Reports')
+    f'正在检查logs文件夹下，是否有超过创建时间超过{common.get_yaml_config_file("config.yaml")["DAYS"]}天的目录.....')
 common.cleanup_directory('logs')
-common.cleanup_directory('screenshot')
+
 
 # 设置报告文件保存路径
 # report_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'Reports\\', )
