@@ -391,6 +391,84 @@ class TestLottery:
         except AssertionError:
             logger.error(f'实际结果：{result}----预期结果：自選走勢,断言失败!!!')
 
+    @logger.catch()
+    def test_lottery_28(self, create_log, init_pages):
+        """验证免費參考页面是否能打开"""
+        global result
+        logger.info('验证免費參考页面是否能打开')
+        try:
+            lottery_page = init_pages[3]
+            result = lottery_page.click_betgame()
+            assert result == '免費參考'
+            logger.info(f'实际结果：{result}----预期结果：免費參考,测试通过!!!')
+        except AssertionError:
+            logger.error(f'实际结果：{result}----预期结果：免費參考,断言失败!!!')
+
+    @logger.catch()
+    def test_lottery_29(self, create_log, init_pages):
+        """验证公式參考页面是否能打开"""
+        global result
+        logger.info('验证公式參考页面是否能打开')
+        try:
+            lottery_page = init_pages[3]
+            result = lottery_page.click_formula()
+            assert result == '公式參考'
+            logger.info(f'实际结果：{result}----预期结果：公式參考,测试通过!!!')
+        except AssertionError:
+            logger.error(f'实际结果：{result}----预期结果：公式參考,断言失败!!!')
+
+    @logger.catch()
+    def test_lottery_30(self, create_log, init_pages):
+        """验证闖關計劃页面是否能打开"""
+        global result
+        logger.info('验证闖關計劃页面是否能打开')
+        try:
+            lottery_page = init_pages[3]
+            result = lottery_page.click_passplan()
+            assert result == '闖關計劃'
+            logger.info(f'实际结果：{result}----预期结果：闖關計劃,测试通过!!!')
+        except AssertionError:
+            logger.error(f'实际结果：{result}----预期结果：闖關計劃,断言失败!!!')
+
+    @logger.catch()
+    def test_lottery_31(self, create_log, init_pages):
+        """验证殺號定膽页面是否能打开"""
+        global result
+        logger.info('验证殺號定膽页面是否能打开')
+        try:
+            lottery_page = init_pages[3]
+            result = lottery_page.click_passplan()
+            assert result == '公式參考'
+            logger.info(f'实际结果：{result}----预期结果：公式參考,测试通过!!!')
+        except AssertionError:
+            logger.error(f'实际结果：{result}----预期结果：公式參考,断言失败!!!')
+
+    @logger.catch()
+    def test_lottery_32(self, create_log, init_pages):
+        """验证推薦計劃页面是否能打开"""
+        global result
+        logger.info('验证推薦計劃页面是否能打开')
+        try:
+            lottery_page = init_pages[3]
+            result = lottery_page.click_numberplan()
+            assert '推薦計劃' in result
+            logger.info(f'推薦計劃包含在{result},测试通过!!!')
+        except AssertionError:
+            logger.error(f'推薦計劃不包含在{result},断言失败!!!')
+
+    @logger.catch()
+    def test_lottery_33(self, create_log, init_pages):
+        """验证九宮計劃页面是否能打开"""
+        global result
+        logger.info('验证九宮計劃页面是否能打开')
+        try:
+            lottery_page = init_pages[3]
+            result = lottery_page.click_nineplan()
+            assert result == '九宮計劃'
+            logger.info(f'实际结果：{result}----预期结果：九宮計劃,测试通过!!!')
+        except AssertionError:
+            logger.error(f'实际结果：{result}----预期结果：九宮計劃,断言失败!!!')
+
 
 if __name__ == '__main__':
     pytest.main(['-v', 'test_lottery.py'])

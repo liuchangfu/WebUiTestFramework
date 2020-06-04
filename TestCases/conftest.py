@@ -6,8 +6,11 @@ import pytest
 from Base.baidupage import BaiDuSearchPage
 from Base.PageObject.HomePage import HomePage
 from Base.PageObject.LotteryPage import LotteryPage
+from Base.PageObject.GuessPage import GuessPage
+from Base.PageObject.CommunityPage import CommunityPage
 from framework.common import saved_log
 from loguru import logger
+from config.conf import Cookies
 
 
 @pytest.fixture(scope='module')
@@ -25,7 +28,9 @@ def init_pages(driver):
     baidu_page = BaiDuSearchPage(driver)
     home_page = HomePage(driver)
     lottery_page = LotteryPage(driver)
-    yield driver, baidu_page, home_page, lottery_page
+    guess_page = GuessPage(driver)
+    community_page = CommunityPage(driver)
+    yield driver, baidu_page, home_page, lottery_page, guess_page, community_page
 
 # @pytest.fixture(scope='function')
 # def open_url(init_pages):

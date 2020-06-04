@@ -13,6 +13,8 @@ from loguru import logger
 from selenium import webdriver
 from selenium.webdriver.common.action_chains import ActionChains
 
+from config.conf import Cookies
+
 
 class BasePage:
     """结合显示等待封装一些selenium内置方法"""
@@ -26,7 +28,6 @@ class BasePage:
             'link_text': By.LINK_TEXT
         }
         self.driver = diver
-        self.driver1 = webdriver.Chrome()
         self.timeout = timeout
 
     def find_element(self, by, locator):
@@ -231,6 +232,33 @@ class BasePage:
             ActionChains(self.driver).move_to_element(mouse).perform()
         except NoSuchElementException:
             logger.error('未找到元素！！')
+
+    def add_cookies(self):
+        cookies1 = {
+            'name': Cookies[0]['NAME1'],
+            'value': Cookies[0]['VAULE1'],
+            'domain': Cookies[2]['DOMAIN'],
+            'path': '/',
+            'httpOnly': True,
+            'secure': False
+        }
+
+        cookies2 = {
+            'name': Cookies[1]['NAME2'],
+            'value': Cookies[1]['VAULE2'],
+            'domain': Cookies[2]['DOMAIN'],
+            'path': '/',
+            'httpOnly': True,
+            'secure': False
+        }
+        try:
+            logger.info('正在执行添加cookies操作...')
+            self.sleep(3)
+            self.driver.add_cookie(cookies1)
+            self.driver.add_cookie(cookies2)
+            self.driver.refresh()
+        except Warning:
+            logger.error('添加cookies失败...')
 
 
 if __name__ == '__main__':

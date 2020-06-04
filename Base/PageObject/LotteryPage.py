@@ -96,6 +96,8 @@ class LotteryPage(BasePage):
     loc40 = (By.XPATH, "//div[@class='funBlock last']//li[5]//a[1]")
     # 九宮計劃
     loc41 = (By.XPATH, "//div[@class='funBlock last']//li[6]//a[1]")
+    # 推荐计划中的提示說明
+    loc42 = (By.XPATH, "//div[@class='attention']")
 
     def open_url(self):
         self.load_url(LOTTERY_URL)
@@ -339,8 +341,9 @@ class LotteryPage(BasePage):
     def click_numberplan(self):
         self.open_url()
         self.click(*self.loc40)
+        self.switch_to_window()
         self.sleep(3)
-        text = self.get_element_text(*self.loc8)
+        text = self.get_element_text(*self.loc42)
         return text
 
     def click_nineplan(self):

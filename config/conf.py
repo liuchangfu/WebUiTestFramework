@@ -10,6 +10,9 @@ URL = 'https://live.kk1350.com/'
 # 彩票大厅网址
 LOTTERY_URL = 'http://cp.kk1350.com/'
 
+# 竞猜大厅网址
+GUESS_URL = 'https://guess.kk1350.com/'
+
 # 项目根目录
 # ROOT_DIR = os.path.dirname(os.path.dirname(__file__))
 ROOT_DIR = pathlib.Path.cwd().parent
@@ -63,17 +66,20 @@ HTML_NAME = f'{CURRENT_DATE}_{CURRENT_TIME}_testcase_report.html'
 Cookies = [
     {
         'NAME1': 'KX_LIVE_TK',
-        'VAULE1': '413196efe71b4b52ac89f4c7d2ca991e',
+        'VAULE1': '2201ef940a884a5c8a9cccfd29999942',
     },
     {
         'NAME2': 'KX_LIVE_UUID',
-        'VAULE2': 'pc-3497046b-59da-4582-8a6f-1d5e1133526b',
+        'VAULE2': '76ffe7a2-e794-435d-bbed-537036b9f4d1',
     },
-    {'DOMAIN': '.nn722.com'}
+    {'DOMAIN': '.kk1350.com'}
 ]
 
 # logger.info(type(Cookies))
 # logger.info(Cookies[0]['NAME1'])
 # logger.info(Cookies[0]['VAULE1'])
-# logger.info(Cookies[1])
-# logger.info(Cookies[2])
+# logger.info(Cookies[2]['DOMAIN'])
+# logger.info(Cookies[1]['NAME2'])
+# logger.info(Cookies[1]['VAULE2'])
+logger.info(Cookies[2]['DOMAIN'])
+
